@@ -9,11 +9,9 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
+atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git" }
 napi = "3.0.0"
 napi-derive = "3.0.0"
-
-[dependencies.atlas-local]
-git = "ssh://git@github.com/mongodb/atlas-local-lib.git"
 
 [build-dependencies]
 napi-build = "2"
