@@ -1,9 +1,9 @@
 
 [package]
-authors = ["LongYinan <lynweklm@gmail.com>"]
+authors = ["APIx DevTools team"]
 edition = "2021"
 name = "atlas_local"
-version = "0.1.0"
+version = "0.0.0-preview.0"
 
 [lib]
 crate-type = ["cdylib"]

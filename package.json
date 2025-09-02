@@ -1,11 +1,11 @@
 {
   "name": "@mongodb-js-preview/atlas-local",
-  "version": "1.0.0",
-  "description": "Template project for writing node package with napi-rs",
+  "version": "0.0.0-preview.0",
+  "description": "A Node.js library for managing MongoDB Atlas Local deployments using Docker. This library provides a high-level JavaScript/TypeScript interface to interact with MongoDB Atlas Local deployments, making it easy to develop and test applications against a local MongoDB Atlas environment.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/napi-rs/package-template.git"
+    "url": "git+https://github.com/mongodb-js/atlas-local-lib-js.git"
   },
   "license": "Apache-2.0",
   "browser": "browser.js",
@@ -77,9 +77,6 @@
     ],
     "*.@(js|ts|tsx|yml|yaml|md|json)": [
       "prettier --write"
-    ],
-    "*.toml": [
-      "taplo format"
     ]
   },
   "ava": {
