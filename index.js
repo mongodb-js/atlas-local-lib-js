@@ -393,4 +393,8 @@ if (!nativeBinding) {
 }
 
 module.exports = nativeBinding
-module.exports.plus100 = nativeBinding.plus100
+module.exports.Client = nativeBinding.Client
+module.exports.BindingType = nativeBinding.BindingType
+module.exports.CreationSourceType = nativeBinding.CreationSourceType
+module.exports.MongodbType = nativeBinding.MongodbType
+module.exports.State = nativeBinding.State

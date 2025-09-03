@@ -36,7 +36,9 @@ Before using this library, make sure you have:
 Here's a simple example to get you started:
 
 ```typescript
-// TODO
+const client = await Client.connect();
+const deployments = await client.listDeployments();
+console.log(deployments);
 ```
 
 ## Development

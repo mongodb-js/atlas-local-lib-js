@@ -273,15 +273,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   license-and-audit:
-      runs-on: ubuntu-latest
-      steps:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
       - name: Install Rust toolchain
         run: |
           rustup update stable
           rustup default stable
           rustup component add clippy rustfmt
-      
+
       - name: Cache cargo registry
         uses: actions/cache@v4
         with:
@@ -292,7 +292,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
-      
+
       - name: Cache cargo tools
         uses: actions/cache@v4
         with:
@@ -300,21 +300,21 @@ jobs:
           key: ${{ runner.os }}-cargo-tools-deny-${{ env.CARGO_DENY_VERSION }}-audit-${{ env.CARGO_AUDIT_VERSION }}
           restore-keys: |
             ${{ runner.os }}-cargo-tools-
-      
+
       - name: Install cargo-deny
         run: |
           if ! command -v cargo-deny &> /dev/null; then
             cargo install --locked --version ${{ env.CARGO_DENY_VERSION }} cargo-deny
           fi
-      
+
       - name: Install cargo-audit
         run: |
           if ! command -v cargo-audit &> /dev/null; then
             cargo install --locked --version ${{ env.CARGO_AUDIT_VERSION }} cargo-audit
           fi
-      
+
       - name: Run cargo deny
         run: cargo deny check
-      
+
       - name: Run cargo audit
         run: cargo audit
