@@ -9,8 +9,10 @@ version = "0.0.0-preview.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git" }
-napi = "3.0.0"
+anyhow = "1.0.99"
+atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git", rev = "36f56065e891bbe045beeb46489dd7d4142dbd41" }
+bollard = "0.19.2"
+napi = { version = "3.0.0", features = ["async", "anyhow"] }
 napi-derive = "3.0.0"
 
 [build-dependencies]
