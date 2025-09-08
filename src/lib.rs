@@ -36,4 +36,13 @@ impl Client {
       .context("list deployments")
       .map(|deployments| deployments.into_iter().map(|d| d.into()).collect())
   }
+
+  #[napi]
+  pub async fn delete_deployment(&self, deployment_name: String) -> Result<()> {
+    self
+      .client
+      .delete_deployment(&deployment_name)
+      .await
+      .context("delete deployments")
+  }
 }

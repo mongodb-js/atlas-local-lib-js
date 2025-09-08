@@ -3,12 +3,13 @@
 export declare class Client {
   static connect(): Client
   listDeployments(): Promise<Array<Deployment>>
+  deleteDeployment(deploymentName: string): Promise<void>
 }
 
 export declare const enum BindingType {
   Loopback = 'Loopback',
   AnyInterface = 'AnyInterface',
-  Specific = 'Specific',
+  Specific = 'Specific'
 }
 
 export interface CreationSource {
@@ -19,7 +20,8 @@ export interface CreationSource {
 export declare const enum CreationSourceType {
   AtlasCLI = 'AtlasCLI',
   Container = 'Container',
-  Other = 'Other',
+  MCP = 'MCP',
+  Other = 'Other'
 }
 
 export interface Deployment {
@@ -50,7 +52,7 @@ export interface MongoDbPortBinding {
 
 export declare const enum MongodbType {
   Community = 'Community',
-  Enterprise = 'Enterprise',
+  Enterprise = 'Enterprise'
 }
 
 export declare const enum State {
@@ -60,5 +62,5 @@ export declare const enum State {
   Paused = 'Paused',
   Removing = 'Removing',
   Restarting = 'Restarting',
-  Running = 'Running',
+  Running = 'Running'
 }
