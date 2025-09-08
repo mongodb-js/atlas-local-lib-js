@@ -20,16 +20,23 @@ test('smoke test', async (t) => {
     return
   }
 
-  // TODO: Implement once createDeployment is added
-  // let deploymentName = "test_deployment"
-  // await client.createDeployment(...)
+  // Count initial deployments
+  let start_deployments_count = (await client.listDeployments()).length
 
-  // List deployments
-  // We don't care about the number, we're just testing that the method doesn't fail
-  await client.listDeployments()
+  // Create deployment
+  let createDeploymentOptions = {
+    name: "test_deployment",
+  }
+  await client.createDeployment(createDeploymentOptions)
 
-  // TODO: Uncommment when createDeployment is added
-  // await client.deleteDeployment(deploymentName)
+  // Count deployments after creation
+  let after_create_deployment_count = (await client.listDeployments()).length
+  t.assert(after_create_deployment_count - start_deployments_count === 1)
+
+  // Delete deployment
+  await client.deleteDeployment(createDeploymentOptions.name)
   
-  t.pass()
+  // Count deployments after deletion
+  let after_delete_deployment_count = (await client.listDeployments()).length
+  t.assert(start_deployments_count === after_delete_deployment_count)
 })

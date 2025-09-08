@@ -1,3 +1,5 @@
+use std::net::IpAddr;
+
 use napi_derive::napi;
 
 #[napi(object)]
@@ -77,7 +79,7 @@ pub struct CreationSource {
 pub enum CreationSourceType {
   AtlasCLI,
   Container,
-  MCP,
+  MCPServer,
   Other,
 }
 
@@ -143,6 +145,27 @@ impl From<atlas_local::models::MongoDBPortBinding> for MongoDBPortBinding {
   }
 }
 
+impl From<MongoDBPortBinding> for atlas_local::models::MongoDBPortBinding {
+  fn from(source: MongoDBPortBinding) -> Self {
+    match source.binding_type {
+      BindingType::Loopback => atlas_local::models::MongoDBPortBinding {
+        binding_type: atlas_local::models::BindingType::Loopback,
+        port: source.port,
+      },
+      BindingType::AnyInterface => atlas_local::models::MongoDBPortBinding {
+        binding_type: atlas_local::models::BindingType::AnyInterface,
+        port: source.port,
+      },
+      BindingType::Specific => atlas_local::models::MongoDBPortBinding {
+        binding_type: atlas_local::models::BindingType::Specific(
+          source.ip.parse::<IpAddr>().expect("Parse IP address"),
+        ),
+        port: source.port,
+      },
+    }
+  }
+}
+
 impl From<atlas_local::models::MongodbType> for MongodbType {
   fn from(source: atlas_local::models::MongodbType) -> Self {
     match source {
@@ -165,10 +188,25 @@ impl From<atlas_local::models::CreationSource> for CreationSource {
         source_type: CreationSourceType::Container,
         source: "CONTAINER".to_string(),
       },
+      CreationSourceSource::MCPServer => CreationSource {
+        source_type: CreationSourceType::MCPServer,
+        source: "MCPSERVER".to_string(),
+      },
       CreationSourceSource::Unknown(source) => CreationSource {
         source_type: CreationSourceType::Other,
         source,
       },
+    }
+  }
+}
+
+impl From<CreationSource> for atlas_local::models::CreationSource {
+  fn from(source: CreationSource) -> Self {
+    match source.source_type {
+      CreationSourceType::AtlasCLI => atlas_local::models::CreationSource::AtlasCLI,
+      CreationSourceType::Container => atlas_local::models::CreationSource::Container,
+      CreationSourceType::MCPServer => atlas_local::models::CreationSource::MCPServer,
+      CreationSourceType::Other => atlas_local::models::CreationSource::Unknown(source.source),
     }
   }
 }

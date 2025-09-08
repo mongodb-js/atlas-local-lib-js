@@ -28,6 +28,19 @@ impl Client {
   }
 
   #[napi]
+  pub async fn create_deployment(
+    &self,
+    create_deploment_options: crate::models::create_deployment::CreateDeploymentOptions,
+  ) -> Result<()> {
+    let options: atlas_local::models::CreateDeploymentOptions = create_deploment_options.into();
+    self
+      .client
+      .create_deployment(&options)
+      .await
+      .context("create deployment")
+  }
+
+  #[napi]
   pub async fn list_deployments(&self) -> Result<Vec<Deployment>> {
     self
       .client

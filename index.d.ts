@@ -2,6 +2,7 @@
 /* eslint-disable */
 export declare class Client {
   static connect(): Client
+  createDeployment(createDeplomentOptions: CreateDeploymentOptions): Promise<void>
   listDeployments(): Promise<Array<Deployment>>
   deleteDeployment(deploymentName: string): Promise<void>
 }
@@ -12,6 +13,24 @@ export declare const enum BindingType {
   Specific = 'Specific'
 }
 
+export interface CreateDeploymentOptions {
+  name?: string
+  image?: string
+  mongodbVersion?: string
+  creationSource?: CreationSource
+  localSeedLocation?: string
+  mongodbInitdbDatabase?: string
+  mongodbInitdbRootPasswordFile?: string
+  mongodbInitdbRootPassword?: string
+  mongodbInitdbRootUsernameFile?: string
+  mongodbInitdbRootUsername?: string
+  mongotLogFile?: string
+  runnerLogFile?: string
+  doNotTrack?: boolean
+  telemetryBaseUrl?: string
+  mongodbPortBinding?: MongoDBPortBinding
+}
+
 export interface CreationSource {
   type: CreationSourceType
   source: string
@@ -20,7 +39,7 @@ export interface CreationSource {
 export declare const enum CreationSourceType {
   AtlasCLI = 'AtlasCLI',
   Container = 'Container',
-  MCP = 'MCP',
+  MCPServer = 'MCPServer',
   Other = 'Other'
 }
 
