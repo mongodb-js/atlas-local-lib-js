@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { Client } from '../index'
 
-test('smoke test: list deployments', async (t) => {
+test('smoke test', async (t) => {
   let client: Client | null = null
 
   try {
@@ -20,8 +20,16 @@ test('smoke test: list deployments', async (t) => {
     return
   }
 
+  // TODO: Implement once createDeployment is added
+  // let deploymentName = "test_deployment"
+  // await client.createDeployment(...)
+
   // List deployments
   // We don't care about the number, we're just testing that the method doesn't fail
   await client.listDeployments()
+
+  // TODO: Uncommment when createDeployment is added
+  // await client.deleteDeployment(deploymentName)
+  
   t.pass()
 })

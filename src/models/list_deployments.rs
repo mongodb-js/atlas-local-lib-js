@@ -77,6 +77,7 @@ pub struct CreationSource {
 pub enum CreationSourceType {
   AtlasCLI,
   Container,
+  MCP,
   Other,
 }
 
