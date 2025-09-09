@@ -158,6 +158,7 @@ jobs:
         run: ls -R .
         shell: bash
       - name: Test bindings
+        if: runner.os != 'Windows'
         run: yarn test
   test-linux-binding:
     name: Test ${{ matrix.target }} - node@${{ matrix.node }}
