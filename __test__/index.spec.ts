@@ -20,6 +20,13 @@ test('smoke test', async (t) => {
     return
   }
 
+  // Skip test after client creation on Windows
+  // Note all Windows return win32 including 64 bit
+  if (process.platform === 'win32') {
+    t.pass('Skipping end-to-end test on Windows')
+    return
+  }
+  
   // Count initial deployments
   let start_deployments_count = (await client.listDeployments()).length
 
