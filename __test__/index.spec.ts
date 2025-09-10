@@ -20,16 +20,30 @@ test('smoke test', async (t) => {
     return
   }
 
-  // TODO: Implement once createDeployment is added
-  // let deploymentName = "test_deployment"
-  // await client.createDeployment(...)
-
-  // List deployments
-  // We don't care about the number, we're just testing that the method doesn't fail
-  await client.listDeployments()
-
-  // TODO: Uncommment when createDeployment is added
-  // await client.deleteDeployment(deploymentName)
+  // Skip test after client creation on Windows
+  // Note all Windows return win32 including 64 bit
+  if (process.platform === 'win32') {
+    t.pass('Skipping end-to-end test on Windows')
+    return
+  }
   
-  t.pass()
+  // Count initial deployments
+  let start_deployments_count = (await client.listDeployments()).length
+
+  // Create deployment
+  let createDeploymentOptions = {
+    name: "test_deployment",
+  }
+  await client.createDeployment(createDeploymentOptions)
+
+  // Count deployments after creation
+  let after_create_deployment_count = (await client.listDeployments()).length
+  t.assert(after_create_deployment_count - start_deployments_count === 1)
+
+  // Delete deployment
+  await client.deleteDeployment(createDeploymentOptions.name)
+  
+  // Count deployments after deletion
+  let after_delete_deployment_count = (await client.listDeployments()).length
+  t.assert(start_deployments_count === after_delete_deployment_count)
 })
