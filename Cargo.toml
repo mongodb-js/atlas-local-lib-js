@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 anyhow = "1.0.99"
-atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git", rev = "323a879b8385e8e572f8545e3273fafa5698f8c6" }
+atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git", rev = "fa7cb7aa67e9169f48864a81f3b63f1cf35c81bb" }
 bollard = "0.19.2"
 napi = { version = "3.0.0", features = ["async", "anyhow"] }
 napi-derive = "3.0.0"

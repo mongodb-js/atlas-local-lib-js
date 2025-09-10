@@ -17,6 +17,8 @@ export interface CreateDeploymentOptions {
   name?: string
   image?: string
   mongodbVersion?: string
+  waitUntilHealthy?: boolean
+  waitUntilHealthyTimeout?: number
   creationSource?: CreationSource
   localSeedLocation?: string
   mongodbInitdbDatabase?: string
