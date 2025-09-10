@@ -1,6 +1,7 @@
 use crate::models::list_deployments::{CreationSource, MongoDBPortBinding};
 use napi_derive::napi;
 use semver::Version;
+use std::time::Duration;
 
 #[napi(object)]
 pub struct CreateDeploymentOptions {
@@ -11,7 +12,9 @@ pub struct CreateDeploymentOptions {
   pub image: Option<String>,
   pub mongodb_version: Option<String>,
 
-  // Creation source
+  // Creation Options
+  pub wait_until_healthy: Option<bool>,
+  pub wait_until_healthy_timeout: Option<u32>,
   pub creation_source: Option<CreationSource>,
 
   // Initial database configuration
@@ -49,6 +52,10 @@ impl From<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentOpti
       name: source.name,
       image: source.image,
       mongodb_version: version,
+      wait_until_healthy: source.wait_until_healthy,
+      wait_until_healthy_timeout: source
+        .wait_until_healthy_timeout
+        .map(|timeout| Duration::from_secs(timeout as u64)),
       creation_source: source
         .creation_source
         .map(atlas_local::models::CreationSource::from),
@@ -81,6 +88,8 @@ mod tests {
       name: Some("test_deployment".to_string()),
       image: Some("mongodb/mongodb-atlas-local".to_string()),
       mongodb_version: Some("8.0.0".to_string()),
+      wait_until_healthy: Some(true),
+      wait_until_healthy_timeout: Some(30),
       creation_source: Some(CreationSource {
         source_type: CreationSourceType::MCPServer,
         source: "MCPSERVER".to_string(),
@@ -114,6 +123,11 @@ mod tests {
     assert_eq!(
       lib_create_deployment_options.mongodb_version,
       Some(Version::new(8, 0, 0))
+    );
+    assert_eq!(lib_create_deployment_options.wait_until_healthy, Some(true));
+    assert_eq!(
+      lib_create_deployment_options.wait_until_healthy_timeout,
+      Some(Duration::from_secs(30))
     );
     assert_eq!(
       lib_create_deployment_options.creation_source,
