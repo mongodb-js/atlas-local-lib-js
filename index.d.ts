@@ -2,7 +2,7 @@
 /* eslint-disable */
 export declare class Client {
   static connect(): Client
-  createDeployment(createDeplomentOptions: CreateDeploymentOptions): Promise<void>
+  createDeployment(createDeplomentOptions: CreateDeploymentOptions): Promise<Deployment>
   listDeployments(): Promise<Array<Deployment>>
   deleteDeployment(deploymentName: string): Promise<void>
 }
@@ -68,7 +68,7 @@ export interface Deployment {
 export interface MongoDbPortBinding {
   type: BindingType
   ip: string
-  port: number
+  port?: number
 }
 
 export declare const enum MongodbType {
