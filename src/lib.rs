@@ -59,4 +59,14 @@ impl Client {
       .await
       .context("delete deployments")
   }
+
+  #[napi]
+  pub async fn get_deployment(&self, deployment_name: String) -> Result<Deployment> {
+    self
+      .client
+      .get_deployment(&deployment_name)
+      .await
+      .context("get deployment")
+      .map(|d| d.into())
+  }
 }

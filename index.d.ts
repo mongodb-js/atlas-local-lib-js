@@ -5,6 +5,7 @@ export declare class Client {
   createDeployment(createDeplomentOptions: CreateDeploymentOptions): Promise<Deployment>
   listDeployments(): Promise<Array<Deployment>>
   deleteDeployment(deploymentName: string): Promise<void>
+  getDeployment(deploymentName: string): Promise<Deployment>
 }
 
 export declare const enum BindingType {
