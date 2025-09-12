@@ -3,7 +3,7 @@
 authors = ["APIx DevTools team"]
 edition = "2021"
 name = "atlas_local"
-version = "0.0.0-preview.2"
+version = "0.0.0-preview.3"
 
 [lib]
 crate-type = ["cdylib"]
