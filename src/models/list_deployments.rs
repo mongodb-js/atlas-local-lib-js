@@ -54,7 +54,7 @@ pub struct MongoDBPortBinding {
   #[napi(js_name = "type")]
   pub binding_type: BindingType,
   pub ip: String,
-  pub port: u16,
+  pub port: Option<u16>,
 }
 
 #[napi(string_enum)]
@@ -231,7 +231,7 @@ mod tests {
       state: atlas_local::models::State::Running,
       port_bindings: Some(atlas_local::models::MongoDBPortBinding {
         binding_type: atlas_local::models::BindingType::Loopback,
-        port: 27017,
+        port: Some(27017),
       }),
       mongodb_type: atlas_local::models::MongodbType::Community,
       mongodb_version: Version::new(8, 0, 0),
@@ -257,7 +257,7 @@ mod tests {
     let port_binding = deployment.port_bindings.unwrap();
     assert_eq!(port_binding.binding_type, BindingType::Loopback);
     assert_eq!(port_binding.ip, "127.0.0.1");
-    assert_eq!(port_binding.port, 27017);
+    assert_eq!(port_binding.port, Some(27017));
     assert_eq!(deployment.mongodb_type, MongodbType::Community);
     assert_eq!(deployment.mongodb_version, "8.0.0");
     assert_eq!(
@@ -310,36 +310,36 @@ mod tests {
   fn test_mongodb_port_binding_from_lib_mongodb_port_binding_loopback() {
     let lib_mongodb_port_binding = atlas_local::models::MongoDBPortBinding {
       binding_type: atlas_local::models::BindingType::Loopback,
-      port: 27017,
+      port: Some(27017),
     };
     let mongodb_port_binding: MongoDBPortBinding = lib_mongodb_port_binding.into();
     assert_eq!(mongodb_port_binding.binding_type, BindingType::Loopback);
     assert_eq!(mongodb_port_binding.ip, "127.0.0.1");
-    assert_eq!(mongodb_port_binding.port, 27017);
+    assert_eq!(mongodb_port_binding.port, Some(27017));
   }
 
   #[test]
   fn test_mongodb_port_binding_from_lib_mongodb_port_binding_any_interface() {
     let lib_mongodb_port_binding = atlas_local::models::MongoDBPortBinding {
       binding_type: atlas_local::models::BindingType::AnyInterface,
-      port: 27017,
+      port: Some(27017),
     };
     let mongodb_port_binding: MongoDBPortBinding = lib_mongodb_port_binding.into();
     assert_eq!(mongodb_port_binding.binding_type, BindingType::AnyInterface);
     assert_eq!(mongodb_port_binding.ip, "0.0.0.0");
-    assert_eq!(mongodb_port_binding.port, 27017);
+    assert_eq!(mongodb_port_binding.port, Some(27017));
   }
 
   #[test]
   fn test_mongodb_port_binding_from_lib_mongodb_port_binding_specific() {
     let lib_mongodb_port_binding = atlas_local::models::MongoDBPortBinding {
       binding_type: atlas_local::models::BindingType::Specific("192.0.2.0".parse().unwrap()),
-      port: 27017,
+      port: Some(27017),
     };
     let mongodb_port_binding: MongoDBPortBinding = lib_mongodb_port_binding.into();
     assert_eq!(mongodb_port_binding.binding_type, BindingType::Specific);
     assert_eq!(mongodb_port_binding.ip, "192.0.2.0");
-    assert_eq!(mongodb_port_binding.port, 27017);
+    assert_eq!(mongodb_port_binding.port, Some(27017));
   }
 
   #[test]
@@ -347,7 +347,7 @@ mod tests {
     let mongodb_port_binding = MongoDBPortBinding {
       binding_type: BindingType::Loopback,
       ip: "127.0.0.1".to_string(),
-      port: 27017,
+      port: Some(27017),
     };
     let lib_mongodb_port_binding: atlas_local::models::MongoDBPortBinding =
       mongodb_port_binding.into();
@@ -355,7 +355,7 @@ mod tests {
       lib_mongodb_port_binding.binding_type,
       atlas_local::models::BindingType::Loopback
     );
-    assert_eq!(lib_mongodb_port_binding.port, 27017);
+    assert_eq!(lib_mongodb_port_binding.port, Some(27017));
   }
 
   #[test]
@@ -363,7 +363,7 @@ mod tests {
     let mongodb_port_binding = MongoDBPortBinding {
       binding_type: BindingType::AnyInterface,
       ip: "0.0.0.0".to_string(),
-      port: 27017,
+      port: Some(27017),
     };
     let lib_mongodb_port_binding: atlas_local::models::MongoDBPortBinding =
       mongodb_port_binding.into();
@@ -371,14 +371,14 @@ mod tests {
       lib_mongodb_port_binding.binding_type,
       atlas_local::models::BindingType::AnyInterface
     );
-    assert_eq!(lib_mongodb_port_binding.port, 27017);
+    assert_eq!(lib_mongodb_port_binding.port, Some(27017));
   }
   #[test]
   fn test_mongodb_port_binding_lib_into_mongodb_port_binding_specific() {
     let mongodb_port_binding = MongoDBPortBinding {
       binding_type: BindingType::Specific,
       ip: "192.0.2.0".to_string(),
-      port: 27017,
+      port: Some(27017),
     };
     let lib_mongodb_port_binding: atlas_local::models::MongoDBPortBinding =
       mongodb_port_binding.into();
@@ -386,7 +386,7 @@ mod tests {
       lib_mongodb_port_binding.binding_type,
       atlas_local::models::BindingType::Specific("192.0.2.0".parse().unwrap())
     );
-    assert_eq!(lib_mongodb_port_binding.port, 27017);
+    assert_eq!(lib_mongodb_port_binding.port, Some(27017));
   }
 
   #[test]

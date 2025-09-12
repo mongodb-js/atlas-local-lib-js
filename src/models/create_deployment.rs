@@ -107,7 +107,7 @@ mod tests {
       mongodb_port_binding: Some(MongoDBPortBinding {
         binding_type: BindingType::Loopback,
         ip: "127.0.0.1".to_string(),
-        port: 27017,
+        port: Some(27017),
       }),
     };
     let lib_create_deployment_options: atlas_local::models::CreateDeploymentOptions =

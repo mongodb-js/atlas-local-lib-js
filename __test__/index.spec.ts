@@ -34,7 +34,12 @@ test('smoke test', async (t) => {
   let createDeploymentOptions = {
     name: "test_deployment",
   }
-  await client.createDeployment(createDeploymentOptions)
+  let deployment = await client.createDeployment(createDeploymentOptions)
+  t.is(deployment.name, createDeploymentOptions.name)
+
+  // Get deployment
+  let getDeployment = await client.getDeployment(createDeploymentOptions.name)
+  t.is(getDeployment.name,createDeploymentOptions.name)
 
   // Count deployments after creation
   let after_create_deployment_count = (await client.listDeployments()).length

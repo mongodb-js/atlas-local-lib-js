@@ -31,12 +31,13 @@ impl Client {
   pub async fn create_deployment(
     &self,
     create_deploment_options: crate::models::create_deployment::CreateDeploymentOptions,
-  ) -> Result<()> {
+  ) -> Result<Deployment> {
     let options: atlas_local::models::CreateDeploymentOptions = create_deploment_options.into();
     self
       .client
       .create_deployment(&options)
       .await
+      .map(|d| d.into())
       .context("create deployment")
   }
 
@@ -57,5 +58,15 @@ impl Client {
       .delete_deployment(&deployment_name)
       .await
       .context("delete deployments")
+  }
+
+  #[napi]
+  pub async fn get_deployment(&self, deployment_name: String) -> Result<Deployment> {
+    self
+      .client
+      .get_deployment(&deployment_name)
+      .await
+      .context("get deployment")
+      .map(|d| d.into())
   }
 }
