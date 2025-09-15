@@ -166,7 +166,7 @@ jobs:
         uses: coverallsapp/github-action@v2.3.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage/lcov.info
+          path-to-lcov: node_modules/lcov-parse/coverage/lcov.info
           parallel: true
 
   test-linux-binding:
