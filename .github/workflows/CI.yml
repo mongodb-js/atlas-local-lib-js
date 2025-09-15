@@ -159,6 +159,19 @@ jobs:
         shell: bash
       - name: Test bindings
         run: yarn test
+
+      - name: Generate coverage report
+        if: ${{ matrix.settings.host == 'macos-latest' && matrix.node == '22' }}
+        run: yarn coverage
+      - name: Upload coverage report
+        if: ${{ matrix.settings.host == 'macos-latest' && matrix.node == '22' }}
+        env:
+          COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        uses: coverallsapp/github-action@v2.3.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: coverage/lcov.info
+
   test-linux-binding:
     name: Test ${{ matrix.target }} - node@${{ matrix.node }}
     needs:
