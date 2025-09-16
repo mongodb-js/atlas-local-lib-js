@@ -50,7 +50,7 @@
     "format:rs": "cargo fmt",
     "lint": "oxlint .",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "ava",
+    "test": "nyc --reporter=lcov ava",
     "version": "napi version",
     "prepare": "husky"
   },
@@ -63,7 +63,6 @@
     "@tybys/wasm-util": "^0.10.0",
     "ava": "^6.4.1",
     "chalk": "^5.4.1",
-    "coveralls": "^3.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "npm-run-all2": "^8.0.4",
@@ -101,5 +100,8 @@
     "singleQuote": true,
     "arrowParens": "always"
   },
-  "packageManager": "yarn@4.9.4"
+  "packageManager": "yarn@4.9.4",
+  "dependencies": {
+    "nyc": "^17.1.0"
+  }
 }
