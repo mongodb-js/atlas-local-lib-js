@@ -50,7 +50,7 @@
     "format:rs": "cargo fmt",
     "lint": "oxlint .",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "nyc --reporter=lcov ava",
+    "test": "ava",
     "version": "napi version",
     "prepare": "husky"
   },
@@ -100,8 +100,5 @@
     "singleQuote": true,
     "arrowParens": "always"
   },
-  "packageManager": "yarn@4.9.4",
-  "dependencies": {
-    "nyc": "^17.1.0"
-  }
+  "packageManager": "yarn@4.9.4"
 }
