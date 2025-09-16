@@ -50,7 +50,7 @@
     "format:rs": "cargo fmt",
     "lint": "oxlint .",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "ava",
+    "test": "nyc --reporter=lcov ava",
     "version": "napi version",
     "prepare": "husky"
   },
@@ -66,6 +66,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "npm-run-all2": "^8.0.4",
+    "nyc": "^17.1.0",
     "oxlint": "^1.8.0",
     "prettier": "^3.6.2",
     "tinybench": "^5.0.0",
