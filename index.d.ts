@@ -71,7 +71,6 @@ export interface GetConnectionStringOptions {
   containerIdOrName: string
   dbUsername?: string
   dbPassword?: string
-  verify?: boolean
 }
 
 export interface MongoDbPortBinding {

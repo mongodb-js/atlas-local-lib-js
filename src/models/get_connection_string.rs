@@ -5,7 +5,6 @@ pub struct GetConnectionStringOptions {
   pub container_id_or_name: String,
   pub db_username: Option<String>,
   pub db_password: Option<String>,
-  pub verify: Option<bool>,
 }
 
 impl From<GetConnectionStringOptions> for atlas_local::models::GetConnectionStringOptions {
@@ -14,7 +13,6 @@ impl From<GetConnectionStringOptions> for atlas_local::models::GetConnectionStri
       container_id_or_name: source.container_id_or_name,
       db_username: source.db_username,
       db_password: source.db_password,
-      verify: source.verify,
     }
   }
 }
@@ -30,7 +28,6 @@ mod tests {
       container_id_or_name: "test_container".into(),
       db_username: Some("test_user".into()),
       db_password: Some("test_pass".into()),
-      verify: Some(true),
     };
 
     let get_connection_string_options: atlas_local::models::GetConnectionStringOptions =
@@ -48,6 +45,5 @@ mod tests {
       get_connection_string_options.db_password,
       Some("test_pass".into())
     );
-    assert_eq!(get_connection_string_options.verify, Some(true));
   }
 }
