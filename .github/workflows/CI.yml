@@ -98,7 +98,9 @@ jobs:
             build: yarn build --target aarch64-apple-darwin
           - host: ubuntu-latest
             target: aarch64-unknown-linux-gnu
-            build: yarn build --target aarch64-unknown-linux-gnu --use-napi-cross
+            build: |
+              export CFLAGS_aarch64_unknown_linux_gnu="-D__ARM_ARCH=8"
+              yarn build --target aarch64-unknown-linux-gnu --use-napi-cross
     name: stable - ${{ matrix.settings.target }} - node@22
     runs-on: ${{ matrix.settings.host }}
     steps:
