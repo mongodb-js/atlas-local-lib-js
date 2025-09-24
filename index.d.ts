@@ -7,6 +7,7 @@ export declare class Client {
   deleteDeployment(deploymentName: string): Promise<void>
   getDeployment(deploymentName: string): Promise<Deployment>
   getConnectionString(options: GetConnectionStringOptions): Promise<string>
+  getDeploymentId(clusterIdOrName: string): Promise<string>
 }
 
 export declare const enum BindingType {

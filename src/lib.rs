@@ -82,4 +82,13 @@ impl Client {
       .await
       .context("get connection string")
   }
+
+  #[napi]
+  pub async fn get_deployment_id(&self, cluster_id_or_name: String) -> Result<String> {
+    self
+      .client
+      .get_deployment_id(&cluster_id_or_name)
+      .await
+      .context("get deployment id")
+  }
 }
