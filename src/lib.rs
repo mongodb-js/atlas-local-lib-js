@@ -69,4 +69,17 @@ impl Client {
       .context("get deployment")
       .map(|d| d.into())
   }
+
+  #[napi]
+  pub async fn get_connection_string(
+    &self,
+    options: crate::models::get_connection_string::GetConnectionStringOptions,
+  ) -> Result<String> {
+    let options: atlas_local::models::GetConnectionStringOptions = options.into();
+    self
+      .client
+      .get_connection_string(options)
+      .await
+      .context("get connection string")
+  }
 }

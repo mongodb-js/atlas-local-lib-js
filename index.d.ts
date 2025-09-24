@@ -6,6 +6,7 @@ export declare class Client {
   listDeployments(): Promise<Array<Deployment>>
   deleteDeployment(deploymentName: string): Promise<void>
   getDeployment(deploymentName: string): Promise<Deployment>
+  getConnectionString(options: GetConnectionStringOptions): Promise<string>
 }
 
 export declare const enum BindingType {
@@ -64,6 +65,12 @@ export interface Deployment {
   runnerLogFile?: string
   doNotTrack?: string
   telemetryBaseUrl?: string
+}
+
+export interface GetConnectionStringOptions {
+  containerIdOrName: string
+  dbUsername?: string
+  dbPassword?: string
 }
 
 export interface MongoDbPortBinding {
