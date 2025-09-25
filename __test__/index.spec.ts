@@ -37,6 +37,11 @@ test('smoke test', async (t) => {
   let deployment = await client.createDeployment(createDeploymentOptions)
   t.is(deployment.name, createDeploymentOptions.name)
 
+  // Get the deployment id twice, make sure it's the same
+  let deploymentId = await client.getDeploymentId(createDeploymentOptions.name)
+  let deploymentId2 = await client.getDeploymentId(createDeploymentOptions.name)
+  t.is(deploymentId, deploymentId2)
+
   // Get deployment
   let getDeployment = await client.getDeployment(createDeploymentOptions.name)
   t.is(getDeployment.name,createDeploymentOptions.name)
