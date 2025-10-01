@@ -71,14 +71,10 @@ impl Client {
   }
 
   #[napi]
-  pub async fn get_connection_string(
-    &self,
-    options: crate::models::get_connection_string::GetConnectionStringOptions,
-  ) -> Result<String> {
-    let options: atlas_local::models::GetConnectionStringOptions = options.into();
+  pub async fn get_connection_string(&self, deployment_name: String) -> Result<String> {
     self
       .client
-      .get_connection_string(options)
+      .get_connection_string(deployment_name)
       .await
       .context("get connection string")
   }
