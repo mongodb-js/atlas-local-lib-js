@@ -1,6 +1,6 @@
 {
   "name": "@mongodb-js-preview/atlas-local",
-  "version": "0.0.0-preview.3",
+  "version": "0.0.0-preview.5",
   "description": "A Node.js library for managing MongoDB Atlas Local deployments using Docker. This library provides a high-level JavaScript/TypeScript interface to interact with MongoDB Atlas Local deployments, making it easy to develop and test applications against a local MongoDB Atlas environment.",
   "main": "index.js",
   "repository": {
@@ -61,6 +61,7 @@
     "@oxc-node/core": "^0.0.32",
     "@taplo/cli": "^0.7.0",
     "@tybys/wasm-util": "^0.10.0",
+    "@types/node": "^24.5.2",
     "ava": "^6.4.1",
     "chalk": "^5.4.1",
     "husky": "^9.1.7",
