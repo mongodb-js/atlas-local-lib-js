@@ -47,7 +47,7 @@ test('smoke test', async (t) => {
   t.is(getDeployment.name,createDeploymentOptions.name)
 
   let connString = await client.getConnectionString(createDeploymentOptions.name)
-  t.assert(connString === `mongodb://user:password@127.0.0.1:${getDeployment.portBindings.port}/?directConnection=true`)
+  t.assert(connString === `mongodb://127.0.0.1:${getDeployment.portBindings.port}/?directConnection=true`)
 
   // Count deployments after creation
   let after_create_deployment_count = (await client.listDeployments()).length
