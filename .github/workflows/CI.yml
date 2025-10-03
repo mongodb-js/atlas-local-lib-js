@@ -6,6 +6,7 @@ env:
   CARGO_INCREMENTAL: '1'
   CARGO_DENY_VERSION: 0.18.4
   CARGO_AUDIT_VERSION: 0.21.2
+  CARGO_ABOUT_VERSION: 0.8.2
 'on':
   push:
     branches:
@@ -362,7 +363,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cargo/bin
-          key: ${{ runner.os }}-cargo-tools-deny-${{ env.CARGO_DENY_VERSION }}-audit-${{ env.CARGO_AUDIT_VERSION }}
+          key: ${{ runner.os }}-cargo-tools-deny-${{ env.CARGO_DENY_VERSION }}-audit-${{ env.CARGO_AUDIT_VERSION }}-about-${{ env.CARGO_ABOUT_VERSION }}
           restore-keys: |
             ${{ runner.os }}-cargo-tools-
 
@@ -378,8 +379,27 @@ jobs:
             cargo install --locked --version ${{ env.CARGO_AUDIT_VERSION }} cargo-audit
           fi
 
+      - name: Install cargo-about
+        run: |
+          if ! command -v cargo-about &> /dev/null; then
+            cargo install --locked --version ${{ env.CARGO_ABOUT_VERSION }} cargo-about
+          fi
+
       - name: Run cargo deny
         run: cargo deny check
 
       - name: Run cargo audit
         run: cargo audit
+
+      - name: Verify LICENSE-3RD-PARTY.txt is up to date
+        run: |
+          cargo about generate --frozen about.hbs > LICENSE-3RD-PARTY-generated.txt
+          if ! diff -q LICENSE-3RD-PARTY.txt LICENSE-3RD-PARTY-generated.txt > /dev/null; then
+            echo "ERROR: LICENSE-3RD-PARTY.txt is not up to date!"
+            echo "Please run: cargo about generate about.hbs > LICENSE-3RD-PARTY.txt"
+            echo "Differences found:"
+            diff LICENSE-3RD-PARTY.txt LICENSE-3RD-PARTY-generated.txt || true
+            exit 1
+          fi
+          rm LICENSE-3RD-PARTY-generated.txt
+          echo "LICENSE-3RD-PARTY.txt is up to date"

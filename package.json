@@ -20,7 +20,8 @@
   "files": [
     "index.d.ts",
     "index.js",
-    "license.html"
+    "LICENSE",
+    "LICENSE-3RD-PARTY.txt"
   ],
   "napi": {
     "binaryName": "atlas-local",
