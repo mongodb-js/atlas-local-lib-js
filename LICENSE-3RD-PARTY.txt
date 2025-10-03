@@ -1,7 +1,7 @@
 THIRD PARTY LICENSES
 ====================
 
-This file lists the licenses of the projects used in atlas-local.
+This file lists the licenses of the projects used in atlas-local-js.
 
 OVERVIEW OF LICENSES:
 - Apache License 2.0 (92 dependencies)
