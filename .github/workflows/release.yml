@@ -35,19 +35,24 @@ jobs:
           targets: x86_64-unknown-linux-gnu
       - name: Install dependencies
         run: yarn install
+      - name: Install conventional-changelog-cli
+        run: npm install -g conventional-changelog-cli
       - name: Update package.json version
         run: |
           npm version ${{ github.event.inputs.version }} --no-git-tag-version
       - name: Update Cargo.toml version
         run: |
           sed -i 's/^version = ".*"/version = "${{ github.event.inputs.version }}"/' Cargo.toml
+      - name: Generate changelog
+        run: |
+          conventional-changelog -p conventionalcommits -i CHANGELOG.md -s
       - name: Build to update generated files
         run: yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
       - name: Commit version changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add package.json Cargo.toml index.js index.d.ts
+          git add package.json Cargo.toml index.js index.d.ts CHANGELOG.md
           git commit -m "${{ github.event.inputs.version }}"
           git push
       - name: Set version output
