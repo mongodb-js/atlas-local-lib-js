@@ -26,7 +26,7 @@ trim = true
 render_always = true
 # An array of regex based postprocessors to modify the changelog.
 postprocessors = [
-    { pattern = '\((\w+?\s*#([0-9]+))\)', replace = "([#${2}](https://github.com/mongodb-js/atlas-local-lib-js/pull/${2}))" },
+    { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/mongodb-js/atlas-local-lib-js/pull/${2}))" },
 ]
 # render body even when there are no releases to process
 # render_always = true
