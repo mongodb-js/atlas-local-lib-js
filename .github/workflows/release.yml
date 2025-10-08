@@ -23,6 +23,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -35,8 +36,6 @@ jobs:
           targets: x86_64-unknown-linux-gnu
       - name: Install dependencies
         run: yarn install
-      - name: Install conventional-changelog-cli
-        run: npm install -g conventional-changelog-cli
       - name: Install cargo tools for license verification
         run: |
           cargo install --locked --version 0.8.2 cargo-about
@@ -50,8 +49,13 @@ jobs:
         run: |
           cargo about generate about.hbs > LICENSE-3RD-PARTY.txt
       - name: Generate changelog
-        run: |
-          conventional-changelog -p conventionalcommits -i CHANGELOG.md -s
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
       - name: Build to update generated files
         run: yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
       - name: Commit version changes
