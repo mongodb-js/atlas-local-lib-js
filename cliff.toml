@@ -26,7 +26,7 @@ trim = true
 render_always = true
 # An array of regex based postprocessors to modify the changelog.
 postprocessors = [
-    { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/$GITHUB_REPO/issues/${2}))" },
+    { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/mongodb-js/atlas-local-lib-js/pull/${2}))" },
 ]
 # render body even when there are no releases to process
 # render_always = true
@@ -78,7 +78,7 @@ commit_parsers = [
 filter_commits = false
 # An array of link parsers for extracting external references, and turning them into URLs, using regex.
 link_parsers = [
-    { pattern = "#(\\d+)", href = "https://github.com/$GITHUB_REPO/issues/$1" }
+    { pattern = "#(\\d+)", href = "https://github.com/mongodb-js/atlas-local-lib-js/issues/$1" },
 ]
 # Include only the tags that belong to the current branch.
 use_branch_tags = false

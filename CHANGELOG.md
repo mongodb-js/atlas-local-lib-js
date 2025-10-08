@@ -1,8 +1,8 @@
-## [unreleased]
+## [0.0.0-preview.8] - 2025-10-08
 
 ### 🚀 Features
 
-- Improve release process using github workflow ([#18](https://github.com//issues/18))
+- Improve release process using github workflow ([#18](https://github.com/mongodb-js/atlas-local-lib-js/pull/18))
 ## [0.0.0-preview.7] - 2025-10-03
 
 ### ⚙️ Miscellaneous Tasks
@@ -23,7 +23,7 @@
 
 ### 🚀 Features
 
-- Add Coveralls ([#9](https://github.com//issues/9))
+- Add Coveralls ([#9](https://github.com/mongodb-js/atlas-local-lib-js/pull/9))
 - Implement get_connection_string
 
 ### 🐛 Bug Fixes
