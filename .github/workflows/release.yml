@@ -1,0 +1,213 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+        type: string
+
+env:
+  DEBUG: napi:*
+  APP_NAME: atlas-local
+  MACOSX_DEPLOYMENT_TARGET: '10.13'
+
+jobs:
+  update-version:
+    name: Update Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Set Apix Bot token
+        id: app-token
+        uses: mongodb/apix-action/token@6c3fde402c21942fa46cde003f190c2b23c59530
+        with:
+          app-id: ${{ secrets.APIXBOT_APP_ID }}
+          private-key: ${{ secrets.APIXBOT_APP_PEM }}
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          targets: x86_64-unknown-linux-gnu
+      - name: Install dependencies
+        run: yarn install
+      - name: Install cargo tools for license verification
+        run: |
+          cargo install --locked --version 0.8.2 cargo-about
+      - name: Update package.json version
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+      - name: Update Cargo.toml version
+        run: |
+          sed -i 's/^version = ".*"/version = "${{ github.event.inputs.version }}"/' Cargo.toml
+      - name: Update third-party licenses
+        run: |
+          cargo about generate about.hbs > LICENSE-3RD-PARTY.txt
+      - name: Generate changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+      - name: Build to update generated files
+        run: yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
+      - name: Commit version changes
+        run: |
+          git config --global user.name "${{ steps.app-token.outputs.user-name }}"
+          git config --global user.email "${{ steps.app-token.outputs.user-email }}"
+          git add package.json Cargo.toml index.js index.d.ts CHANGELOG.md LICENSE-3RD-PARTY.txt
+          git commit -m "${{ github.event.inputs.version }}"
+          git push
+      - name: Set version output
+        id: version
+        run: echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build Release
+    needs: update-version
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - host: macos-latest
+            target: x86_64-apple-darwin
+            build: yarn build --target x86_64-apple-darwin
+          - host: windows-latest
+            build: yarn build --target x86_64-pc-windows-msvc
+            target: x86_64-pc-windows-msvc
+          - host: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            build: yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
+          - host: macos-latest
+            target: aarch64-apple-darwin
+            build: yarn build --target aarch64-apple-darwin
+          - host: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            build: yarn build --target aarch64-unknown-linux-gnu --use-napi-cross
+    runs-on: ${{ matrix.settings.host }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          targets: ${{ matrix.settings.target }}
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.napi-rs
+            .cargo-cache
+            target/
+          key: ${{ matrix.settings.target }}-cargo-${{ matrix.settings.host }}
+      - uses: mlugg/setup-zig@v2
+        if: ${{ contains(matrix.settings.target, 'musl') }}
+        with:
+          version: 0.14.1
+      - name: Install cargo-zigbuild
+        uses: taiki-e/install-action@v2
+        if: ${{ contains(matrix.settings.target, 'musl') }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tool: cargo-zigbuild
+      - name: Setup toolchain
+        run: ${{ matrix.settings.setup }}
+        if: ${{ matrix.settings.setup }}
+        shell: bash
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: ${{ matrix.settings.build }}
+        shell: bash
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bindings-${{ matrix.settings.target }}
+          path: |
+            ${{ env.APP_NAME }}.*.node
+            ${{ env.APP_NAME }}.*.wasm
+          if-no-files-found: error
+
+  publish:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    needs: [update-version, build]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install
+      - name: Create npm dirs
+        run: yarn napi create-npm-dirs
+      - name: Download all artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: artifacts
+      - name: Move artifacts
+        run: yarn artifacts
+      - name: List packages
+        run: ls -R ./npm
+        shell: bash
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.update-version.outputs.version }}
+          name: Release v${{ needs.update-version.outputs.version }}
+          files: artifacts/bindings-*/*.node
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM
+        run: |
+          npm config set provenance true
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" > /dev/null;
+          then
+            echo "Publishing stable release to latest tag"
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            npm publish --access public
+          elif echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+" > /dev/null;
+          then
+            echo "Publishing pre-release to next tag"
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            npm publish --tag next --access public
+          else
+            echo "Invalid release tag format: '$COMMIT_MSG'"
+            echo "Expected format: X.Y.Z or X.Y.Z-suffix"
+            echo "Skipping publish"
+            exit 0
+          fi
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

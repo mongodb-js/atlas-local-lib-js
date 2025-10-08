@@ -73,6 +73,10 @@ The complete API documentation is available in the generated TypeScript definiti
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
+
 ## License
 
 This project is licensed under the Apache License, Version 2.0 (see `LICENSE`). It also makes use of third-party libraries, which are distributed under their own respective licenses (see `LICENSE-3RD-PARTY.txt`).

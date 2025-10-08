@@ -21,7 +21,8 @@
     "index.d.ts",
     "index.js",
     "LICENSE",
-    "LICENSE-3RD-PARTY.txt"
+    "LICENSE-3RD-PARTY.txt",
+    "CHANGELOG.md"
   ],
   "napi": {
     "binaryName": "atlas-local",
