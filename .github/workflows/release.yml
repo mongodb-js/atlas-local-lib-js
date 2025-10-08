@@ -37,12 +37,18 @@ jobs:
         run: yarn install
       - name: Install conventional-changelog-cli
         run: npm install -g conventional-changelog-cli
+      - name: Install cargo tools for license verification
+        run: |
+          cargo install --locked --version 0.8.2 cargo-about
       - name: Update package.json version
         run: |
           npm version ${{ github.event.inputs.version }} --no-git-tag-version
       - name: Update Cargo.toml version
         run: |
           sed -i 's/^version = ".*"/version = "${{ github.event.inputs.version }}"/' Cargo.toml
+      - name: Update third-party licenses
+        run: |
+          cargo about generate about.hbs > LICENSE-3RD-PARTY.txt
       - name: Generate changelog
         run: |
           conventional-changelog -p conventionalcommits -i CHANGELOG.md -s
@@ -52,7 +58,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add package.json Cargo.toml index.js index.d.ts CHANGELOG.md
+          git add package.json Cargo.toml index.js index.d.ts CHANGELOG.md LICENSE-3RD-PARTY.txt
           git commit -m "${{ github.event.inputs.version }}"
           git push
       - name: Set version output
@@ -162,7 +168,22 @@ jobs:
       - name: Publish to NPM
         run: |
           npm config set provenance true
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-          npm publish --access public
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" > /dev/null;
+          then
+            echo "Publishing stable release to latest tag"
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            npm publish --access public
+          elif echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+" > /dev/null;
+          then
+            echo "Publishing pre-release to next tag"
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            npm publish --tag next --access public
+          else
+            echo "Invalid release tag format: '$COMMIT_MSG'"
+            echo "Expected format: X.Y.Z or X.Y.Z-suffix"
+            echo "Skipping publish"
+            exit 0
+          fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
