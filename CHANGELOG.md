@@ -1,3 +1,9 @@
+## [0.0.0-preview.9] - 2025-10-09
+
+### 🐛 Bug Fixes
+
+- Fix update to changelog in release process ([#19](https://github.com/mongodb-js/atlas-local-lib-js/pull/19))
+- Add license files to GitHub release ([#20](https://github.com/mongodb-js/atlas-local-lib-js/pull/20))
 ## [0.0.0-preview.8] - 2025-10-08
 
 ### 🚀 Features
