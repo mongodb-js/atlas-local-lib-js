@@ -186,7 +186,12 @@ jobs:
         with:
           tag_name: v${{ needs.update-version.outputs.version }}
           name: Release v${{ needs.update-version.outputs.version }}
-          files: artifacts/bindings-*/*.node
+          files: |
+            artifacts/bindings-*/*.node
+            index.js
+            index.d.ts
+            LICENSE
+            LICENSE-3RD-PARTY.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to NPM
