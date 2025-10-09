@@ -181,17 +181,27 @@ jobs:
       - name: List packages
         run: ls -R ./npm
         shell: bash
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --tag v${{ needs.update-version.outputs.version }} --unreleased
+        env:
+          OUTPUT: RELEASE_NOTES.md
+          GITHUB_REPO: ${{ github.repository }}
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.update-version.outputs.version }}
           name: Release v${{ needs.update-version.outputs.version }}
+          body_path: RELEASE_NOTES.md
           files: |
             artifacts/bindings-*/*.node
             index.js
             index.d.ts
             LICENSE
             LICENSE-3RD-PARTY.txt
+            CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to NPM
