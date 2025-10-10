@@ -1,3 +1,8 @@
+## [0.0.0-preview.11] - 2025-10-10
+
+### ⚙️ Miscellaneous Tasks
+
+- Move generate release notes step earlier ([#22](https://github.com/mongodb-js/atlas-local-lib-js/pull/22))
 ## [0.0.0-preview.10] - 2025-10-10
 
 ### 🐛 Bug Fixes
