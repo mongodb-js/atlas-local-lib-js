@@ -62,6 +62,20 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --tag ${{ github.event.inputs.version }} --verbose --unreleased
+        env:
+          OUTPUT: RELEASE_NOTES.md
+          GITHUB_REPO: ${{ github.repository }}
+      - name: Upload release notes artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: RELEASE_NOTES.md
+          if-no-files-found: error
       - name: Build to update generated files
         run: yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
       - name: Commit version changes
@@ -181,20 +195,12 @@ jobs:
       - name: List packages
         run: ls -R ./npm
         shell: bash
-      - name: Generate release notes
-        uses: orhun/git-cliff-action@v4
-        with:
-          config: cliff.toml
-          args: --latest
-        env:
-          OUTPUT: RELEASE_NOTES.md
-          GITHUB_REPO: ${{ github.repository }}
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.update-version.outputs.version }}
           name: Release v${{ needs.update-version.outputs.version }}
-          body_path: RELEASE_NOTES.md
+          body_path: artifacts/release-notes/RELEASE_NOTES.md
           files: |
             artifacts/bindings-*/*.node
             index.js
