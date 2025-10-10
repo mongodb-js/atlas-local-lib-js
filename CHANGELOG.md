@@ -1,3 +1,8 @@
+## [0.0.0-preview.10] - 2025-10-10
+
+### 🐛 Bug Fixes
+
+- Use latest changes in release notes ([#21](https://github.com/mongodb-js/atlas-local-lib-js/pull/21))
 ## [0.0.0-preview.9] - 2025-10-09
 
 ### 🐛 Bug Fixes
