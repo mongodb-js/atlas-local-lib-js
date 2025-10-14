@@ -559,9 +559,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mongodb-js-preview/atlas-local@workspace:.":
+"@mongodb-js/atlas-local@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@mongodb-js-preview/atlas-local@workspace:."
+  resolution: "@mongodb-js/atlas-local@workspace:."
   dependencies:
     "@emnapi/core": "npm:^1.4.5"
     "@emnapi/runtime": "npm:^1.4.5"
