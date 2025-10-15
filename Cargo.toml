@@ -4,14 +4,15 @@ authors = ["APIx DevTools team"]
 edition = "2021"
 name = "atlas_local"
 version = "1.0.0"
+license = "Apache-2.0"
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
 anyhow = "1.0.99"
-atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git", rev = "532d5f3c52788cb14f746e7b10edb3ce33dad89e" }
-bollard = "0.19.2"
+atlas-local = { git = "https://github.com/mongodb/atlas-local-lib.git", rev = "9b582845ebf2e4ca4f6543fa5bb1262920e2fbe6" }
+bollard = "0.19.3"
 napi = { version = "^3.3.0", features = ["async", "anyhow"] }
 napi-derive = "^3.2.5"
 semver = "1.0.26"
