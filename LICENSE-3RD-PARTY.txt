@@ -463,7 +463,7 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - bollard 0.19.2 (https://github.com/fussybeaver/bollard)
+        - bollard 0.19.3 (https://github.com/fussybeaver/bollard)
         - hyper-named-pipe 0.1.0 (https://github.com/fussybeaver/hyper-named-pipe)
 -----------------------------------------------------------------------------
 
@@ -3625,7 +3625,7 @@ limitations under the License.
                         Apache License 2.0
         applies to: 
         - anyhow 1.0.100 (https://github.com/dtolnay/anyhow)
-        - bollard-stubs 1.49.0-rc.28.3.3
+        - bollard-stubs 1.49.1-rc.28.4.0
         - itoa 1.0.15 (https://github.com/dtolnay/itoa)
         - libc 0.2.176 (https://github.com/rust-lang/libc)
         - miniz_oxide 0.8.9 (https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide)
@@ -3645,8 +3645,8 @@ limitations under the License.
         - serde_repr 0.1.20 (https://github.com/dtolnay/serde-repr)
         - serde_urlencoded 0.7.1 (https://github.com/nox/serde_urlencoded)
         - syn 2.0.106 (https://github.com/dtolnay/syn)
-        - thiserror-impl 2.0.16 (https://github.com/dtolnay/thiserror)
-        - thiserror 2.0.16 (https://github.com/dtolnay/thiserror)
+        - thiserror-impl 2.0.17 (https://github.com/dtolnay/thiserror)
+        - thiserror 2.0.17 (https://github.com/dtolnay/thiserror)
         - unicode-ident 1.0.19 (https://github.com/dtolnay/unicode-ident)
         - wasip2 1.0.1+wasi-0.2.4 (https://github.com/bytecodealliance/wasi-rs)
         - winapi-i686-pc-windows-gnu 0.4.0 (https://github.com/retep998/winapi-rs)
