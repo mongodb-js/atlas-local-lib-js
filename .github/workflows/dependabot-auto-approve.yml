@@ -13,7 +13,7 @@ jobs:
   auto-approve:
     runs-on: ubuntu-latest
     if: |
-      github.repository == 'mongodb/atlas-local-lib-js' &&
+      github.repository == 'mongodb-js/atlas-local-lib-js' &&
       github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
       - name: Checkout PR
