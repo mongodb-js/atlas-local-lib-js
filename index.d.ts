@@ -10,11 +10,9 @@ export declare class Client {
   getDeploymentId(clusterIdOrName: string): Promise<string>
 }
 
-export declare const enum BindingType {
-  Loopback = 'Loopback',
-  AnyInterface = 'AnyInterface',
-  Specific = 'Specific'
-}
+export type BindingType =  'Loopback'|
+'AnyInterface'|
+'Specific';
 
 export interface CreateDeploymentOptions {
   name?: string
@@ -41,12 +39,10 @@ export interface CreationSource {
   source: string
 }
 
-export declare const enum CreationSourceType {
-  AtlasCLI = 'AtlasCLI',
-  Container = 'Container',
-  MCPServer = 'MCPServer',
-  Other = 'Other'
-}
+export type CreationSourceType =  'AtlasCLI'|
+'Container'|
+'MCPServer'|
+'Other';
 
 export interface Deployment {
   containerId: string
@@ -74,17 +70,13 @@ export interface MongoDbPortBinding {
   port?: number
 }
 
-export declare const enum MongodbType {
-  Community = 'Community',
-  Enterprise = 'Enterprise'
-}
+export type MongodbType =  'Community'|
+'Enterprise';
 
-export declare const enum State {
-  Created = 'Created',
-  Dead = 'Dead',
-  Exited = 'Exited',
-  Paused = 'Paused',
-  Removing = 'Removing',
-  Restarting = 'Restarting',
-  Running = 'Running'
-}
+export type State =  'Created'|
+'Dead'|
+'Exited'|
+'Paused'|
+'Removing'|
+'Restarting'|
+'Running';
