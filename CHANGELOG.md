@@ -1,3 +1,15 @@
+## [1.0.2] - 2025-10-16
+
+### 🚀 Features
+
+- Export enums as string unions instead of enums
+- Export enums as string unions instead of enums
+
+### ⚙️ Miscellaneous Tasks
+
+- Include version number in release workflow run name
+- Added dependabot ([#27](https://github.com/mongodb-js/atlas-local-lib-js/pull/27))
+- Fixed issue with dependabot auto-approve (correct repository now) ([#32](https://github.com/mongodb-js/atlas-local-lib-js/pull/32))
 ## [1.0.0] - 2025-10-14
 
 ### 🚀 Features

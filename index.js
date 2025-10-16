@@ -80,8 +80,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-android-arm64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-android-arm64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -96,8 +96,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-android-arm-eabi')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-android-arm-eabi/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -108,7 +108,24 @@ function requireNative() {
     }
   } else if (process.platform === 'win32') {
     if (process.arch === 'x64') {
+      if (process.report?.getReport?.()?.header?.osName?.startsWith?.('MINGW')) {
+        try {
+        return require('./atlas-local.win32-x64-gnu.node')
+      } catch (e) {
+        loadErrors.push(e)
+      }
       try {
+        const binding = require('@mongodb-js/atlas-local-win32-x64-gnu')
+        const bindingPackageVersion = require('@mongodb-js/atlas-local-win32-x64-gnu/package.json').version
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        }
+        return binding
+      } catch (e) {
+        loadErrors.push(e)
+      }
+      } else {
+        try {
         return require('./atlas-local.win32-x64-msvc.node')
       } catch (e) {
         loadErrors.push(e)
@@ -116,12 +133,13 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-win32-x64-msvc')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-win32-x64-msvc/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
         loadErrors.push(e)
+      }
       }
     } else if (process.arch === 'ia32') {
       try {
@@ -132,8 +150,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-win32-ia32-msvc')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-win32-ia32-msvc/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -148,8 +166,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-win32-arm64-msvc')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-win32-arm64-msvc/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -167,8 +185,8 @@ function requireNative() {
     try {
       const binding = require('@mongodb-js/atlas-local-darwin-universal')
       const bindingPackageVersion = require('@mongodb-js/atlas-local-darwin-universal/package.json').version
-      if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-        throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+      if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+        throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
       }
       return binding
     } catch (e) {
@@ -183,8 +201,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-darwin-x64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-darwin-x64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -199,8 +217,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-darwin-arm64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-darwin-arm64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -219,8 +237,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-freebsd-x64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-freebsd-x64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -235,8 +253,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-freebsd-arm64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-freebsd-arm64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -256,8 +274,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-x64-musl')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-x64-musl/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -272,8 +290,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-x64-gnu')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-x64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -290,8 +308,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-arm64-musl')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-arm64-musl/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -306,8 +324,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-arm64-gnu')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-arm64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -324,8 +342,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-arm-musleabihf')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-arm-musleabihf/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -340,8 +358,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-arm-gnueabihf')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-arm-gnueabihf/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -358,8 +376,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-loong64-musl')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-loong64-musl/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -374,8 +392,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-loong64-gnu')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-loong64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -392,8 +410,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-riscv64-musl')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-riscv64-musl/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -408,8 +426,8 @@ function requireNative() {
         try {
           const binding = require('@mongodb-js/atlas-local-linux-riscv64-gnu')
           const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-riscv64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -425,8 +443,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-linux-ppc64-gnu')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-ppc64-gnu/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -441,8 +459,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-linux-s390x-gnu')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-linux-s390x-gnu/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -461,8 +479,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-openharmony-arm64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-openharmony-arm64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -477,8 +495,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-openharmony-x64')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-openharmony-x64/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -493,8 +511,8 @@ function requireNative() {
       try {
         const binding = require('@mongodb-js/atlas-local-openharmony-arm')
         const bindingPackageVersion = require('@mongodb-js/atlas-local-openharmony-arm/package.json').version
-        if (bindingPackageVersion !== '1.0.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.0.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        if (bindingPackageVersion !== '1.0.2' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 1.0.2 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
