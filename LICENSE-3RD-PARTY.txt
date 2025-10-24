@@ -3203,8 +3203,8 @@ limitations under the License.
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - ctor-proc-macro 0.0.6 (https://github.com/mmastrac/rust-ctor)
-        - ctor 0.5.0 (https://github.com/mmastrac/rust-ctor)
+        - ctor-proc-macro 0.0.7 (https://github.com/mmastrac/rust-ctor)
+        - ctor 0.6.0 (https://github.com/mmastrac/rust-ctor)
         - dtor-proc-macro 0.0.6 (https://github.com/mmastrac/rust-ctor)
         - dtor 0.1.0 (https://github.com/mmastrac/rust-ctor)
 -----------------------------------------------------------------------------
@@ -4158,11 +4158,11 @@ SOFTWARE.
 -----------------------------------------------------------------------------
                         MIT License
         applies to: 
-        - napi-build 2.2.3 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 2.2.0 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.2.5 (https://github.com/napi-rs/napi-rs)
-        - napi-sys 3.0.0 (https://github.com/napi-rs/napi-rs)
-        - napi 3.3.0 (https://github.com/napi-rs/napi-rs)
+        - napi-build 2.2.4 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 3.0.0 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.3.0 (https://github.com/napi-rs/napi-rs)
+        - napi-sys 3.0.1 (https://github.com/napi-rs/napi-rs)
+        - napi 3.4.0 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
