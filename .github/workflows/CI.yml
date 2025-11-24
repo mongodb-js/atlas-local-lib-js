@@ -75,7 +75,7 @@ jobs:
       - name: Upload coverage to Coveralls
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: lcov.info
@@ -199,7 +199,7 @@ jobs:
       - name: Upload coverage report
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: coverage/lcov.info
@@ -273,7 +273,7 @@ jobs:
       - name: Upload coverage report
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: coverage/lcov.info
@@ -286,7 +286,7 @@ jobs:
       - name: Send coverage
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true    
