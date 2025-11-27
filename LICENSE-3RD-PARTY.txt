@@ -4,7 +4,7 @@ THIRD PARTY LICENSES
 This file lists the licenses of the projects used in atlas-local-js.
 
 OVERVIEW OF LICENSES:
-- Apache License 2.0 (92 dependencies)
+- Apache License 2.0 (95 dependencies)
 - MIT License (23 dependencies)
 - Unicode License v3 (19 dependencies)
 - BSD Zero Clause License (1 dependencies)
@@ -463,7 +463,7 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - bollard 0.19.3 (https://github.com/fussybeaver/bollard)
+        - bollard 0.19.4 (https://github.com/fussybeaver/bollard)
         - hyper-named-pipe 0.1.0 (https://github.com/fussybeaver/hyper-named-pipe)
 -----------------------------------------------------------------------------
 
@@ -1514,10 +1514,13 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
         applies to: 
         - futures-channel 0.3.31 (https://github.com/rust-lang/futures-rs)
         - futures-core 0.3.31 (https://github.com/rust-lang/futures-rs)
+        - futures-executor 0.3.31 (https://github.com/rust-lang/futures-rs)
+        - futures-io 0.3.31 (https://github.com/rust-lang/futures-rs)
         - futures-macro 0.3.31 (https://github.com/rust-lang/futures-rs)
         - futures-sink 0.3.31 (https://github.com/rust-lang/futures-rs)
         - futures-task 0.3.31 (https://github.com/rust-lang/futures-rs)
         - futures-util 0.3.31 (https://github.com/rust-lang/futures-rs)
+        - futures 0.3.31 (https://github.com/rust-lang/futures-rs)
 -----------------------------------------------------------------------------
 
                               Apache License
@@ -3731,7 +3734,7 @@ limitations under the License.
 -----------------------------------------------------------------------------
                         ISC License
         applies to: 
-        - libloading 0.8.9 (https://github.com/nagisa/rust_libloading/)
+        - libloading 0.9.0 (https://github.com/nagisa/rust_libloading/)
 -----------------------------------------------------------------------------
 
 Copyright © 2015, Simonas Kazlauskas
@@ -4130,7 +4133,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 -----------------------------------------------------------------------------
                         MIT License
         applies to: 
-        - convert_case 0.8.0 (https://github.com/rutrum/convert-case)
+        - convert_case 0.9.0 (https://github.com/rutrum/convert-case)
 -----------------------------------------------------------------------------
 
 MIT License
@@ -4158,11 +4161,11 @@ SOFTWARE.
 -----------------------------------------------------------------------------
                         MIT License
         applies to: 
-        - napi-build 2.2.4 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 3.0.0 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.3.0 (https://github.com/napi-rs/napi-rs)
-        - napi-sys 3.0.1 (https://github.com/napi-rs/napi-rs)
-        - napi 3.4.0 (https://github.com/napi-rs/napi-rs)
+        - napi-build 2.3.1 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 3.0.2 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.3.3 (https://github.com/napi-rs/napi-rs)
+        - napi-sys 3.1.1 (https://github.com/napi-rs/napi-rs)
+        - napi 3.5.2 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
