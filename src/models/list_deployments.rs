@@ -26,13 +26,14 @@ pub struct Deployment {
   pub mongodb_initdb_root_password: Option<String>,
   pub mongodb_initdb_root_username_file: Option<String>,
   pub mongodb_initdb_root_username: Option<String>,
+  pub mongodb_load_sample_data: Option<bool>,
 
   // Logging
   pub mongot_log_file: Option<String>,
   pub runner_log_file: Option<String>,
 
   // Telemetry
-  pub do_not_track: Option<String>,
+  pub do_not_track: bool,
   pub telemetry_base_url: Option<String>,
 }
 
@@ -105,6 +106,7 @@ impl From<atlas_local::models::Deployment> for Deployment {
       mongodb_initdb_root_password: source.mongodb_initdb_root_password,
       mongodb_initdb_root_username_file: source.mongodb_initdb_root_username_file,
       mongodb_initdb_root_username: source.mongodb_initdb_root_username,
+      mongodb_load_sample_data: source.mongodb_load_sample_data,
       mongot_log_file: source.mongot_log_file,
       runner_log_file: source.runner_log_file,
       do_not_track: source.do_not_track,
@@ -242,9 +244,10 @@ mod tests {
       mongodb_initdb_root_password: Some("password123".to_string()),
       mongodb_initdb_root_username_file: Some("/run/secrets/username".to_string()),
       mongodb_initdb_root_username: Some("admin".to_string()),
+      mongodb_load_sample_data: Some(false),
       mongot_log_file: Some("/tmp/mongot.log".to_string()),
       runner_log_file: Some("/tmp/runner.log".to_string()),
-      do_not_track: Some("false".to_string()),
+      do_not_track: false,
       telemetry_base_url: Some("https://telemetry.example.com".to_string()),
     };
 
@@ -291,6 +294,7 @@ mod tests {
       deployment.mongodb_initdb_root_username,
       Some("admin".to_string())
     );
+    assert_eq!(deployment.mongodb_load_sample_data, Some(false));
     assert_eq!(
       deployment.mongot_log_file,
       Some("/tmp/mongot.log".to_string())
@@ -299,7 +303,7 @@ mod tests {
       deployment.runner_log_file,
       Some("/tmp/runner.log".to_string())
     );
-    assert_eq!(deployment.do_not_track, Some("false".to_string()));
+    assert_eq!(deployment.do_not_track, false);
     assert_eq!(
       deployment.telemetry_base_url,
       Some("https://telemetry.example.com".to_string())

@@ -33,6 +33,7 @@ test('smoke test', async (t) => {
   // Create deployment
   let createDeploymentOptions = {
     name: "test_deployment",
+    doNotTrack: true,
   }
   let deployment = await client.createDeployment(createDeploymentOptions)
   t.is(deployment.name, createDeploymentOptions.name)

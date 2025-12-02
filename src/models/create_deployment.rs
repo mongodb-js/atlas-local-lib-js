@@ -19,6 +19,7 @@ pub struct CreateDeploymentOptions {
 
   // Initial database configuration
   pub local_seed_location: Option<String>,
+  pub load_sample_data: Option<bool>,
   pub mongodb_initdb_database: Option<String>,
   pub mongodb_initdb_root_password_file: Option<String>,
   pub mongodb_initdb_root_password: Option<String>,
@@ -60,6 +61,7 @@ impl From<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentOpti
         .creation_source
         .map(atlas_local::models::CreationSource::from),
       local_seed_location: source.local_seed_location,
+      load_sample_data: source.load_sample_data,
       mongodb_initdb_database: source.mongodb_initdb_database,
       mongodb_initdb_root_password_file: source.mongodb_initdb_root_password_file,
       mongodb_initdb_root_password: source.mongodb_initdb_root_password,
@@ -95,6 +97,7 @@ mod tests {
         source: "MCPSERVER".to_string(),
       }),
       local_seed_location: Some("/host/seed-data".to_string()),
+      load_sample_data: Some(true),
       mongodb_initdb_database: Some("testdb".to_string()),
       mongodb_initdb_root_password_file: Some("/run/secrets/password".to_string()),
       mongodb_initdb_root_password: Some("password123".to_string()),
@@ -137,6 +140,7 @@ mod tests {
       lib_create_deployment_options.local_seed_location,
       Some("/host/seed-data".to_string())
     );
+    assert_eq!(lib_create_deployment_options.load_sample_data, Some(true));
     assert_eq!(
       lib_create_deployment_options.mongodb_initdb_database,
       Some("testdb".to_string())
