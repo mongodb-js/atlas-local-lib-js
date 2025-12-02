@@ -22,6 +22,7 @@ export interface CreateDeploymentOptions {
   waitUntilHealthyTimeout?: number
   creationSource?: CreationSource
   localSeedLocation?: string
+  loadSampleData?: boolean
   mongodbInitdbDatabase?: string
   mongodbInitdbRootPasswordFile?: string
   mongodbInitdbRootPassword?: string
@@ -58,9 +59,10 @@ export interface Deployment {
   mongodbInitdbRootPassword?: string
   mongodbInitdbRootUsernameFile?: string
   mongodbInitdbRootUsername?: string
+  mongodbLoadSampleData?: boolean
   mongotLogFile?: string
   runnerLogFile?: string
-  doNotTrack?: string
+  doNotTrack: boolean
   telemetryBaseUrl?: string
 }
 
