@@ -1,3 +1,12 @@
+## [1.1.0] - 2025-12-03
+
+### 🚀 Features
+
+- [**breaking**] Add support for loading sample data ([#51](https://github.com/mongodb-js/atlas-local-lib-js/pull/51))
+
+### ⚙️ Miscellaneous Tasks
+
+- Add GitHub Action to check PR title format ([#43](https://github.com/mongodb-js/atlas-local-lib-js/pull/43))
 ## [1.0.2] - 2025-10-16
 
 ### 🚀 Features

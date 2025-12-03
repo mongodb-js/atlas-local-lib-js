@@ -864,7 +864,7 @@ OVERVIEW OF LICENSES:
                         Apache License 2.0
         applies to: 
         - atlas-local 0.1.0
-        - atlas_local 1.0.2
+        - atlas_local 1.1.0
 -----------------------------------------------------------------------------
 
                                  Apache License
