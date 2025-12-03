@@ -10,6 +10,10 @@ on:
 
 run-name: "Release: ${{ inputs.version }}"
 
+permissions:
+  contents: read
+  id-token: write # Required for npm trusted publishing
+
 env:
   DEBUG: napi:*
   APP_NAME: atlas-local
@@ -184,6 +188,10 @@ jobs:
         with:
           node-version: 22
           cache: yarn
+      # Ensure npm 11.5.1 or later is installed
+      # Required for trusted publishing: https://docs.npmjs.com/trusted-publishers
+      - name: Update npm
+        run: npm install -g npm@latest
       - name: Install dependencies
         run: yarn install
       - name: Create npm dirs
@@ -219,12 +227,10 @@ jobs:
           if echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" > /dev/null;
           then
             echo "Publishing stable release to latest tag"
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
             npm publish --access public
           elif echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+" > /dev/null;
           then
             echo "Publishing pre-release to next tag"
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
             npm publish --tag next --access public
           else
             echo "Invalid release tag format: '$COMMIT_MSG'"
@@ -232,5 +238,3 @@ jobs:
             echo "Skipping publish"
             exit 0
           fi
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
