@@ -20,7 +20,8 @@ checksum = "a23eb6b1614318a8071c9b2521f36b424b2c83db5eb3a0fead4a6c0809af6e61"
 [[package]]
 name = "atlas-local"
 version = "0.1.0"
-source = "git+https://github.com/mongodb/atlas-local-lib.git?rev=493fb78eb2f38228d486c8537274ab752f1eac04#493fb78eb2f38228d486c8537274ab752f1eac04"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "34b13239eecc5133fbbb5a9c234b22903e31f1bbb4c57df376373290831f0467"
 dependencies = [
  "bollard",
  "futures-util",
