@@ -3898,7 +3898,7 @@ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRES
 -----------------------------------------------------------------------------
                         MIT License
         applies to: 
-        - convert_case 0.9.0 (https://github.com/rutrum/convert-case)
+        - convert_case 0.10.0 (https://github.com/rutrum/convert-case)
 -----------------------------------------------------------------------------
 
 MIT License
@@ -3927,10 +3927,10 @@ SOFTWARE.
                         MIT License
         applies to: 
         - napi-build 2.3.1 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 3.0.2 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.3.3 (https://github.com/napi-rs/napi-rs)
-        - napi-sys 3.1.1 (https://github.com/napi-rs/napi-rs)
-        - napi 3.5.2 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 4.0.0 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.4.0 (https://github.com/napi-rs/napi-rs)
+        - napi-sys 3.2.1 (https://github.com/napi-rs/napi-rs)
+        - napi 3.7.0 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
