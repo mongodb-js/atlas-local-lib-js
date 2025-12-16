@@ -863,8 +863,8 @@ OVERVIEW OF LICENSES:
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - atlas-local 0.1.0
         - atlas_local 1.1.0
+        - atlas-local 0.1.0 (https://github.com/mongodb/atlas-local-lib)
 -----------------------------------------------------------------------------
 
                                  Apache License
