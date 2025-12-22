@@ -11,10 +11,10 @@ crate-type = ["cdylib"]
 
 [dependencies]
 anyhow = "1.0.99"
-atlas-local = { version = "0.1.0", default-features = false }
+atlas-local = { version = "0.2.0", default-features = false }
 bollard = "0.19.4"
-napi = { version = "^3.5.2", features = ["async", "anyhow"] }
-napi-derive = "^3.3.3"
+napi = { version = "^3.7.1", features = ["async", "anyhow"] }
+napi-derive = "^3.4.1"
 semver = "1.0.26"
 
 [build-dependencies]
