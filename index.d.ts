@@ -17,6 +17,7 @@ export type BindingType =  'Loopback'|
 export interface CreateDeploymentOptions {
   name?: string
   image?: string
+  skipPullImage?: boolean
   mongodbVersion?: string
   waitUntilHealthy?: boolean
   waitUntilHealthyTimeout?: number
@@ -41,6 +42,7 @@ export interface CreationSource {
 }
 
 export type CreationSourceType =  'AtlasCLI'|
+'AtlasLocal'|
 'Container'|
 'MCPServer'|
 'Other';
