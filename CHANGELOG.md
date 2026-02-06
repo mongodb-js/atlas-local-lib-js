@@ -1,3 +1,8 @@
+## [1.2.0] - 2026-02-06
+
+### ⚙️ Miscellaneous Tasks
+
+- Addressed code scanner alerts ([#71](https://github.com/mongodb-js/atlas-local-lib-js/pull/71))
 ## [1.1.0] - 2025-12-03
 
 ### 🚀 Features
