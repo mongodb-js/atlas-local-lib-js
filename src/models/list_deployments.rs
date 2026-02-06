@@ -85,6 +85,7 @@ pub struct CreationSource {
 #[derive(PartialEq, Debug)]
 pub enum CreationSourceType {
   AtlasCLI,
+  AtlasLocal,
   Container,
   MCPServer,
   Other,
@@ -192,6 +193,10 @@ impl From<atlas_local::models::CreationSource> for CreationSource {
         source_type: CreationSourceType::AtlasCLI,
         source: "ATLASCLI".to_string(),
       },
+      CreationSourceSource::AtlasLocal => CreationSource {
+        source_type: CreationSourceType::AtlasLocal,
+        source: "ATLASLOCAL".to_string(),
+      },
       CreationSourceSource::Container => CreationSource {
         source_type: CreationSourceType::Container,
         source: "CONTAINER".to_string(),
@@ -212,6 +217,7 @@ impl From<CreationSource> for atlas_local::models::CreationSource {
   fn from(source: CreationSource) -> Self {
     match source.source_type {
       CreationSourceType::AtlasCLI => atlas_local::models::CreationSource::AtlasCLI,
+      CreationSourceType::AtlasLocal => atlas_local::models::CreationSource::AtlasLocal,
       CreationSourceType::Container => atlas_local::models::CreationSource::Container,
       CreationSourceType::MCPServer => atlas_local::models::CreationSource::MCPServer,
       CreationSourceType::Other => atlas_local::models::CreationSource::Unknown(source.source),
@@ -403,6 +409,14 @@ mod tests {
     let creation_source: CreationSource = lib_creation_source.into();
     assert_eq!(creation_source.source_type, CreationSourceType::AtlasCLI);
     assert_eq!(creation_source.source, "ATLASCLI");
+  }
+
+  #[test]
+  fn test_creation_source_from_lib_creation_source_atlas_local() {
+    let lib_creation_source = atlas_local::models::CreationSource::AtlasLocal;
+    let creation_source: CreationSource = lib_creation_source.into();
+    assert_eq!(creation_source.source_type, CreationSourceType::AtlasLocal);
+    assert_eq!(creation_source.source, "ATLASLOCAL");
   }
 
   #[test]

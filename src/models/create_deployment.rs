@@ -1,6 +1,6 @@
 use crate::models::list_deployments::{CreationSource, MongoDBPortBinding};
+use atlas_local::models::MongoDBVersion;
 use napi_derive::napi;
-use semver::Version;
 use std::time::Duration;
 
 #[napi(object)]
@@ -10,6 +10,7 @@ pub struct CreateDeploymentOptions {
 
   // Image details
   pub image: Option<String>,
+  pub skip_pull_image: Option<bool>,
   pub mongodb_version: Option<String>,
 
   // Creation Options
@@ -38,21 +39,20 @@ pub struct CreateDeploymentOptions {
   pub mongodb_port_binding: Option<MongoDBPortBinding>,
 }
 
-impl From<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentOptions {
-  fn from(source: CreateDeploymentOptions) -> Self {
-    let version: Option<Version> = match source.mongodb_version.as_deref() {
-      Some("latest") => None,
-      None => None,
-      Some(ver_string) => {
-        // If malformed Version if given, it will panic here
-        Some(Version::parse(ver_string).expect("Parse version string"))
-      }
-    };
+impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentOptions {
+  type Error = anyhow::Error;
 
-    Self {
+  fn try_from(source: CreateDeploymentOptions) -> Result<Self, Self::Error> {
+    Ok(Self {
       name: source.name,
       image: source.image,
-      mongodb_version: version,
+      skip_pull_image: source.skip_pull_image,
+      mongodb_version: source
+        .mongodb_version
+        .as_deref()
+        .map(MongoDBVersion::try_from)
+        .transpose()
+        .map_err(anyhow::Error::msg)?,
       wait_until_healthy: source.wait_until_healthy,
       wait_until_healthy_timeout: source
         .wait_until_healthy_timeout
@@ -74,12 +74,14 @@ impl From<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentOpti
       mongodb_port_binding: source
         .mongodb_port_binding
         .map(atlas_local::models::MongoDBPortBinding::from),
-    }
+    })
   }
 }
 
 #[cfg(test)]
 mod tests {
+  use atlas_local::models::MongoDBVersionMajorMinorPatch;
+
   use crate::models::list_deployments::{BindingType, CreationSourceType};
 
   use super::*;
@@ -89,6 +91,7 @@ mod tests {
     let create_deployment_options = CreateDeploymentOptions {
       name: Some("test_deployment".to_string()),
       image: Some("mongodb/mongodb-atlas-local".to_string()),
+      skip_pull_image: Some(false),
       mongodb_version: Some("8.0.0".to_string()),
       wait_until_healthy: Some(true),
       wait_until_healthy_timeout: Some(30),
@@ -114,7 +117,7 @@ mod tests {
       }),
     };
     let lib_create_deployment_options: atlas_local::models::CreateDeploymentOptions =
-      create_deployment_options.into();
+      create_deployment_options.try_into().unwrap();
     assert_eq!(
       lib_create_deployment_options.name,
       Some("test_deployment".to_string())
@@ -125,7 +128,13 @@ mod tests {
     );
     assert_eq!(
       lib_create_deployment_options.mongodb_version,
-      Some(Version::new(8, 0, 0))
+      Some(MongoDBVersion::MajorMinorPatch(
+        MongoDBVersionMajorMinorPatch {
+          major: 8,
+          minor: 0,
+          patch: 0,
+        }
+      ))
     );
     assert_eq!(lib_create_deployment_options.wait_until_healthy, Some(true));
     assert_eq!(

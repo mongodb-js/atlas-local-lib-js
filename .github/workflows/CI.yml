@@ -4,9 +4,9 @@ env:
   APP_NAME: atlas-local
   MACOSX_DEPLOYMENT_TARGET: '10.13'
   CARGO_INCREMENTAL: '1'
-  CARGO_DENY_VERSION: 0.18.4
-  CARGO_AUDIT_VERSION: 0.21.2
-  CARGO_ABOUT_VERSION: 0.8.2
+  CARGO_DENY_VERSION: 0.18.9
+  CARGO_AUDIT_VERSION: 0.22.0
+  CARGO_ABOUT_VERSION: 0.8.4
 'on':
   push:
     branches:
@@ -311,31 +311,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
-      - name: Cache cargo tools
-        uses: actions/cache@v5
-        with:
-          path: ~/.cargo/bin
-          key: ${{ runner.os }}-cargo-tools-deny-${{ env.CARGO_DENY_VERSION }}-audit-${{ env.CARGO_AUDIT_VERSION }}-about-${{ env.CARGO_ABOUT_VERSION }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-tools-
+      - name: Install cargo-binstall
+        uses: cargo-bins/cargo-binstall@v1.16.2
 
       - name: Install cargo-deny
-        run: |
-          if ! command -v cargo-deny &> /dev/null; then
-            cargo install --locked --version ${{ env.CARGO_DENY_VERSION }} cargo-deny
-          fi
+        run: cargo binstall --no-confirm --locked --version ${{ env.CARGO_DENY_VERSION }} cargo-deny
 
       - name: Install cargo-audit
-        run: |
-          if ! command -v cargo-audit &> /dev/null; then
-            cargo install --locked --version ${{ env.CARGO_AUDIT_VERSION }} cargo-audit
-          fi
+        run: cargo binstall --no-confirm --locked --version ${{ env.CARGO_AUDIT_VERSION }} cargo-audit
 
       - name: Install cargo-about
-        run: |
-          if ! command -v cargo-about &> /dev/null; then
-            cargo install --locked --version ${{ env.CARGO_ABOUT_VERSION }} cargo-about
-          fi
+        run: cargo binstall --no-confirm --locked --version ${{ env.CARGO_ABOUT_VERSION }} cargo-about
 
       - name: Run cargo deny
         run: cargo deny check

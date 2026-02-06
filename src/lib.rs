@@ -32,10 +32,9 @@ impl Client {
     &self,
     create_deploment_options: crate::models::create_deployment::CreateDeploymentOptions,
   ) -> Result<Deployment> {
-    let options: atlas_local::models::CreateDeploymentOptions = create_deploment_options.into();
     self
       .client
-      .create_deployment(&options)
+      .create_deployment(create_deploment_options.try_into()?)
       .await
       .map(|d| d.into())
       .context("create deployment")
