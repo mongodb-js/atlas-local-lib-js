@@ -19,6 +19,7 @@ export interface CreateDeploymentOptions {
   image?: string
   skipPullImage?: boolean
   mongodbVersion?: string
+  usePreviewTag?: boolean
   waitUntilHealthy?: boolean
   waitUntilHealthyTimeout?: number
   creationSource?: CreationSource
