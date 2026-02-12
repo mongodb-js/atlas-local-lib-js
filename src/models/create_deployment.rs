@@ -13,6 +13,7 @@ pub struct CreateDeploymentOptions {
   pub skip_pull_image: Option<bool>,
   pub mongodb_version: Option<String>,
   pub use_preview_tag: Option<bool>,
+
   // Creation Options
   pub wait_until_healthy: Option<bool>,
   pub wait_until_healthy_timeout: Option<u32>,
