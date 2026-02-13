@@ -12,6 +12,7 @@ pub struct CreateDeploymentOptions {
   pub image: Option<String>,
   pub skip_pull_image: Option<bool>,
   pub mongodb_version: Option<String>,
+  pub use_preview_tag: Option<bool>,
 
   // Creation Options
   pub wait_until_healthy: Option<bool>,
@@ -53,6 +54,7 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
         .map(MongoDBVersion::try_from)
         .transpose()
         .map_err(anyhow::Error::msg)?,
+      use_preview_tag: source.use_preview_tag,
       wait_until_healthy: source.wait_until_healthy,
       wait_until_healthy_timeout: source
         .wait_until_healthy_timeout
@@ -93,6 +95,7 @@ mod tests {
       image: Some("mongodb/mongodb-atlas-local".to_string()),
       skip_pull_image: Some(false),
       mongodb_version: Some("8.0.0".to_string()),
+      use_preview_tag: Some(true),
       wait_until_healthy: Some(true),
       wait_until_healthy_timeout: Some(30),
       creation_source: Some(CreationSource {
@@ -136,6 +139,7 @@ mod tests {
         }
       ))
     );
+    assert_eq!(lib_create_deployment_options.use_preview_tag, Some(true));
     assert_eq!(lib_create_deployment_options.wait_until_healthy, Some(true));
     assert_eq!(
       lib_create_deployment_options.wait_until_healthy_timeout,
