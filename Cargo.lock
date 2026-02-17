@@ -19,9 +19,9 @@ checksum = "5f0e0fee31ef5ed1ba1316088939cea399010ed7731dba877ed44aeb407a75ea"
 
 [[package]]
 name = "atlas-local"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d1da6aceb26136a2fad05e35b47bcd04f10ad1818a6a42ab10fd26f8b2a6e52"
+checksum = "91d1b3523687302d8b50932f10ebd296c0042d105efbd333debafbdf10711d3e"
 dependencies = [
  "bollard",
  "bytes",
