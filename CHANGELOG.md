@@ -1,3 +1,8 @@
+## [1.2.1] - 2026-02-16
+
+### 🚀 Features
+
+- Add voyage api key option to create deployment options  ([#80](https://github.com/mongodb-js/atlas-local-lib-js/pull/80))
 ## [1.2.0] - 2026-02-06
 
 ### ⚙️ Miscellaneous Tasks

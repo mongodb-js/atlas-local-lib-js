@@ -27,6 +27,7 @@ pub struct Deployment {
   pub mongodb_initdb_root_username_file: Option<String>,
   pub mongodb_initdb_root_username: Option<String>,
   pub mongodb_load_sample_data: Option<bool>,
+  pub voyage_api_key: Option<String>,
 
   // Logging
   pub mongot_log_file: Option<String>,
@@ -108,6 +109,7 @@ impl From<atlas_local::models::Deployment> for Deployment {
       mongodb_initdb_root_username_file: source.mongodb_initdb_root_username_file,
       mongodb_initdb_root_username: source.mongodb_initdb_root_username,
       mongodb_load_sample_data: source.mongodb_load_sample_data,
+      voyage_api_key: source.voyage_api_key,
       mongot_log_file: source.mongot_log_file,
       runner_log_file: source.runner_log_file,
       do_not_track: source.do_not_track,
@@ -251,6 +253,7 @@ mod tests {
       mongodb_initdb_root_username_file: Some("/run/secrets/username".to_string()),
       mongodb_initdb_root_username: Some("admin".to_string()),
       mongodb_load_sample_data: Some(false),
+      voyage_api_key: Some("voyage_api_key".to_string()),
       mongot_log_file: Some("/tmp/mongot.log".to_string()),
       runner_log_file: Some("/tmp/runner.log".to_string()),
       do_not_track: false,
@@ -301,6 +304,10 @@ mod tests {
       Some("admin".to_string())
     );
     assert_eq!(deployment.mongodb_load_sample_data, Some(false));
+    assert_eq!(
+      deployment.voyage_api_key,
+      Some("voyage_api_key".to_string())
+    );
     assert_eq!(
       deployment.mongot_log_file,
       Some("/tmp/mongot.log".to_string())

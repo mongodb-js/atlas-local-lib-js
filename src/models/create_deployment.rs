@@ -1,5 +1,5 @@
 use crate::models::list_deployments::{CreationSource, MongoDBPortBinding};
-use atlas_local::models::MongoDBVersion;
+use atlas_local::models::ImageTag;
 use napi_derive::napi;
 use std::time::Duration;
 
@@ -11,7 +11,7 @@ pub struct CreateDeploymentOptions {
   // Image details
   pub image: Option<String>,
   pub skip_pull_image: Option<bool>,
-  pub mongodb_version: Option<String>,
+  pub image_tag: Option<String>,
 
   // Creation Options
   pub wait_until_healthy: Option<bool>,
@@ -26,6 +26,7 @@ pub struct CreateDeploymentOptions {
   pub mongodb_initdb_root_password: Option<String>,
   pub mongodb_initdb_root_username_file: Option<String>,
   pub mongodb_initdb_root_username: Option<String>,
+  pub voyage_api_key: Option<String>,
 
   // Logging
   pub mongot_log_file: Option<String>,
@@ -47,10 +48,10 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
       name: source.name,
       image: source.image,
       skip_pull_image: source.skip_pull_image,
-      mongodb_version: source
-        .mongodb_version
+      image_tag: source
+        .image_tag
         .as_deref()
-        .map(MongoDBVersion::try_from)
+        .map(ImageTag::try_from)
         .transpose()
         .map_err(anyhow::Error::msg)?,
       wait_until_healthy: source.wait_until_healthy,
@@ -67,6 +68,7 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
       mongodb_initdb_root_password: source.mongodb_initdb_root_password,
       mongodb_initdb_root_username_file: source.mongodb_initdb_root_username_file,
       mongodb_initdb_root_username: source.mongodb_initdb_root_username,
+      voyage_api_key: source.voyage_api_key,
       mongot_log_file: source.mongot_log_file,
       runner_log_file: source.runner_log_file,
       do_not_track: source.do_not_track,
@@ -80,7 +82,7 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
 
 #[cfg(test)]
 mod tests {
-  use atlas_local::models::MongoDBVersionMajorMinorPatch;
+  use atlas_local::models::{ImageTag, MongoDBVersion, MongoDBVersionMajorMinorPatch};
 
   use crate::models::list_deployments::{BindingType, CreationSourceType};
 
@@ -92,7 +94,7 @@ mod tests {
       name: Some("test_deployment".to_string()),
       image: Some("mongodb/mongodb-atlas-local".to_string()),
       skip_pull_image: Some(false),
-      mongodb_version: Some("8.0.0".to_string()),
+      image_tag: Some("8.0.0".to_string()),
       wait_until_healthy: Some(true),
       wait_until_healthy_timeout: Some(30),
       creation_source: Some(CreationSource {
@@ -106,6 +108,7 @@ mod tests {
       mongodb_initdb_root_password: Some("password123".to_string()),
       mongodb_initdb_root_username_file: Some("/run/secrets/username".to_string()),
       mongodb_initdb_root_username: Some("admin".to_string()),
+      voyage_api_key: Some("voyage_api_key".to_string()),
       mongot_log_file: Some("/tmp/mongot.log".to_string()),
       runner_log_file: Some("/tmp/runner.log".to_string()),
       do_not_track: Some(false),
@@ -127,14 +130,14 @@ mod tests {
       Some("mongodb/mongodb-atlas-local".to_string())
     );
     assert_eq!(
-      lib_create_deployment_options.mongodb_version,
-      Some(MongoDBVersion::MajorMinorPatch(
+      lib_create_deployment_options.image_tag,
+      Some(ImageTag::Semver(MongoDBVersion::MajorMinorPatch(
         MongoDBVersionMajorMinorPatch {
           major: 8,
           minor: 0,
           patch: 0,
         }
-      ))
+      )))
     );
     assert_eq!(lib_create_deployment_options.wait_until_healthy, Some(true));
     assert_eq!(
@@ -169,6 +172,10 @@ mod tests {
     assert_eq!(
       lib_create_deployment_options.mongodb_initdb_root_username,
       Some("admin".to_string())
+    );
+    assert_eq!(
+      lib_create_deployment_options.voyage_api_key,
+      Some("voyage_api_key".to_string())
     );
     assert_eq!(
       lib_create_deployment_options.mongot_log_file,

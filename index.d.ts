@@ -18,7 +18,7 @@ export interface CreateDeploymentOptions {
   name?: string
   image?: string
   skipPullImage?: boolean
-  mongodbVersion?: string
+  imageTag?: string
   waitUntilHealthy?: boolean
   waitUntilHealthyTimeout?: number
   creationSource?: CreationSource
@@ -29,6 +29,7 @@ export interface CreateDeploymentOptions {
   mongodbInitdbRootPassword?: string
   mongodbInitdbRootUsernameFile?: string
   mongodbInitdbRootUsername?: string
+  voyageApiKey?: string
   mongotLogFile?: string
   runnerLogFile?: string
   doNotTrack?: boolean
@@ -62,6 +63,7 @@ export interface Deployment {
   mongodbInitdbRootUsernameFile?: string
   mongodbInitdbRootUsername?: string
   mongodbLoadSampleData?: boolean
+  voyageApiKey?: string
   mongotLogFile?: string
   runnerLogFile?: string
   doNotTrack: boolean
