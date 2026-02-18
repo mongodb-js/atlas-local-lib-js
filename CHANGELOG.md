@@ -1,3 +1,8 @@
+## [1.3.0] - 2026-02-18
+
+### 🚀 Features
+
+- Update atlas-local-lib-js to use imageTag instead of mdbVersion ([#81](https://github.com/mongodb-js/atlas-local-lib-js/pull/81))
 ## [1.2.1] - 2026-02-16
 
 ### 🚀 Features
