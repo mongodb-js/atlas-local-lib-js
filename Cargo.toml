@@ -13,8 +13,8 @@ crate-type = ["cdylib"]
 anyhow = "1.0.101"
 atlas-local = { version = "0.6.0", default-features = false }
 bollard = "0.20.1"
-napi = { version = "^3.8.2", features = ["async", "anyhow"] }
-napi-derive = "^3.5.1"
+napi = { version = "^3.8.3", features = ["async", "anyhow"] }
+napi-derive = "^3.5.2"
 
 [dev-dependencies]
 semver = "1.0.27"
