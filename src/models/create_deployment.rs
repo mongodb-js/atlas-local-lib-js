@@ -1,5 +1,5 @@
 use crate::models::list_deployments::{CreationSource, MongoDBPortBinding};
-use atlas_local::models::MongoDBVersion;
+use atlas_local::models::ImageTag;
 use napi_derive::napi;
 use std::time::Duration;
 
@@ -11,7 +11,7 @@ pub struct CreateDeploymentOptions {
   // Image details
   pub image: Option<String>,
   pub skip_pull_image: Option<bool>,
-  pub mongodb_version: Option<String>,
+  pub image_tag: Option<String>,
 
   // Creation Options
   pub wait_until_healthy: Option<bool>,
@@ -48,10 +48,10 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
       name: source.name,
       image: source.image,
       skip_pull_image: source.skip_pull_image,
-      mongodb_version: source
-        .mongodb_version
+      image_tag: source
+        .image_tag
         .as_deref()
-        .map(MongoDBVersion::try_from)
+        .map(ImageTag::try_from)
         .transpose()
         .map_err(anyhow::Error::msg)?,
       wait_until_healthy: source.wait_until_healthy,
@@ -82,7 +82,7 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
 
 #[cfg(test)]
 mod tests {
-  use atlas_local::models::MongoDBVersionMajorMinorPatch;
+  use atlas_local::models::{ImageTag, MongoDBVersion, MongoDBVersionMajorMinorPatch};
 
   use crate::models::list_deployments::{BindingType, CreationSourceType};
 
@@ -94,7 +94,7 @@ mod tests {
       name: Some("test_deployment".to_string()),
       image: Some("mongodb/mongodb-atlas-local".to_string()),
       skip_pull_image: Some(false),
-      mongodb_version: Some("8.0.0".to_string()),
+      image_tag: Some("8.0.0".to_string()),
       wait_until_healthy: Some(true),
       wait_until_healthy_timeout: Some(30),
       creation_source: Some(CreationSource {
@@ -130,14 +130,14 @@ mod tests {
       Some("mongodb/mongodb-atlas-local".to_string())
     );
     assert_eq!(
-      lib_create_deployment_options.mongodb_version,
-      Some(MongoDBVersion::MajorMinorPatch(
+      lib_create_deployment_options.image_tag,
+      Some(ImageTag::Semver(MongoDBVersion::MajorMinorPatch(
         MongoDBVersionMajorMinorPatch {
           major: 8,
           minor: 0,
           patch: 0,
         }
-      ))
+      )))
     );
     assert_eq!(lib_create_deployment_options.wait_until_healthy, Some(true));
     assert_eq!(
