@@ -10,7 +10,7 @@ license = "Apache-2.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-anyhow = "1.0.101"
+anyhow = "1.0.102"
 atlas-local = { version = "0.6.0", default-features = false }
 bollard = "0.20.1"
 napi = { version = "^3.8.3", features = ["async", "anyhow"] }
