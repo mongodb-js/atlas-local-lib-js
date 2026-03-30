@@ -317,7 +317,7 @@ jobs:
             ${{ runner.os }}-cargo-
 
       - name: Install cargo-binstall
-        uses: cargo-bins/cargo-binstall@v1.17.8
+        uses: cargo-bins/cargo-binstall@v1.17.9
 
       - name: Install cargo-deny
         run: cargo binstall --no-confirm --locked --version ${{ env.CARGO_DENY_VERSION }} cargo-deny
