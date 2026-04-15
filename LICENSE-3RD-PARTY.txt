@@ -3418,7 +3418,7 @@ limitations under the License.
         - proc-macro2 1.0.106 (https://github.com/dtolnay/proc-macro2)
         - quote 1.0.44 (https://github.com/dtolnay/quote)
         - r-efi 5.3.0 (https://github.com/r-efi/r-efi)
-        - rand 0.10.0 (https://github.com/rust-random/rand)
+        - rand 0.10.1 (https://github.com/rust-random/rand)
         - rustc-hash 2.1.1 (https://github.com/rust-lang/rustc-hash)
         - rustversion 1.0.22 (https://github.com/dtolnay/rustversion)
         - ryu 1.0.22 (https://github.com/dtolnay/ryu)
