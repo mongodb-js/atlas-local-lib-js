@@ -448,7 +448,7 @@ OVERVIEW OF LICENSES:
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - bollard 0.20.1 (https://github.com/fussybeaver/bollard)
+        - bollard 0.20.2 (https://github.com/fussybeaver/bollard)
         - hyper-named-pipe 0.1.0 (https://github.com/fussybeaver/hyper-named-pipe)
 -----------------------------------------------------------------------------
 
@@ -2988,10 +2988,10 @@ limitations under the License.
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - ctor-proc-macro 0.0.7 (https://github.com/mmastrac/rust-ctor)
-        - ctor 0.6.3 (https://github.com/mmastrac/rust-ctor)
-        - dtor-proc-macro 0.0.6 (https://github.com/mmastrac/rust-ctor)
-        - dtor 0.1.1 (https://github.com/mmastrac/rust-ctor)
+        - ctor-proc-macro 0.0.12 (https://github.com/mmastrac/rust-ctor)
+        - ctor 0.10.0 (https://github.com/mmastrac/rust-ctor)
+        - dtor-proc-macro 0.0.12 (https://github.com/mmastrac/rust-ctor)
+        - dtor 0.7.0 (https://github.com/mmastrac/rust-ctor)
 -----------------------------------------------------------------------------
 
 Apache License
@@ -3422,7 +3422,7 @@ limitations under the License.
         - rustc-hash 2.1.1 (https://github.com/rust-lang/rustc-hash)
         - rustversion 1.0.22 (https://github.com/dtolnay/rustversion)
         - ryu 1.0.22 (https://github.com/dtolnay/ryu)
-        - semver 1.0.27 (https://github.com/dtolnay/semver)
+        - semver 1.0.28 (https://github.com/dtolnay/semver)
         - serde 1.0.228 (https://github.com/serde-rs/serde)
         - serde_core 1.0.228 (https://github.com/serde-rs/serde)
         - serde_derive 1.0.228 (https://github.com/serde-rs/serde)
@@ -4194,10 +4194,10 @@ SOFTWARE.
                         MIT License
         applies to: 
         - napi-build 2.3.1 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 5.0.2 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.5.2 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 5.0.3 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.5.4 (https://github.com/napi-rs/napi-rs)
         - napi-sys 3.2.1 (https://github.com/napi-rs/napi-rs)
-        - napi 3.8.3 (https://github.com/napi-rs/napi-rs)
+        - napi 3.8.5 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
