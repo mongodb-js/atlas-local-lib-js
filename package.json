@@ -59,7 +59,7 @@
     "@emnapi/core": "^1.4.5",
     "@emnapi/runtime": "^1.4.5",
     "@napi-rs/cli": "^3.0.3",
-    "@oxc-node/core": "^0.0.35",
+    "@oxc-node/core": "^0.1.0",
     "@taplo/cli": "^0.7.0",
     "@tybys/wasm-util": "^0.10.0",
     "@types/node": "^25.0.2",
@@ -72,7 +72,7 @@
     "oxlint": "^1.8.0",
     "prettier": "^3.6.2",
     "tinybench": "^6.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^6.0.2"
   },
   "lint-staged": {
     "*.@(js|ts|tsx)": [
