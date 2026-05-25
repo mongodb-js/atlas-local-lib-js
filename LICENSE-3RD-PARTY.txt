@@ -4,7 +4,7 @@ THIRD PARTY LICENSES
 This file lists the licenses of the projects used in atlas-local-js.
 
 OVERVIEW OF LICENSES:
-- Apache License 2.0 (110 dependencies)
+- Apache License 2.0 (107 dependencies)
 - MIT License (24 dependencies)
 - Unicode License v3 (19 dependencies)
 - ISC License (1 dependencies)
@@ -659,7 +659,7 @@ OVERVIEW OF LICENSES:
                         Apache License 2.0
         applies to: 
         - atlas_local 1.3.0
-        - atlas-local 0.6.0 (https://github.com/mongodb/atlas-local-lib)
+        - atlas-local 0.6.1 (https://github.com/mongodb/atlas-local-lib)
 -----------------------------------------------------------------------------
 
                                  Apache License
@@ -1287,15 +1287,15 @@ OVERVIEW OF LICENSES:
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - futures-channel 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-core 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-executor 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-io 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-macro 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-sink 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-task 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures-util 0.3.31 (https://github.com/rust-lang/futures-rs)
-        - futures 0.3.31 (https://github.com/rust-lang/futures-rs)
+        - futures-channel 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-core 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-executor 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-io 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-macro 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-sink 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-task 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures-util 0.3.32 (https://github.com/rust-lang/futures-rs)
+        - futures 0.3.32 (https://github.com/rust-lang/futures-rs)
 -----------------------------------------------------------------------------
 
                               Apache License
@@ -2988,10 +2988,7 @@ limitations under the License.
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - ctor-proc-macro 0.0.7 (https://github.com/mmastrac/rust-ctor)
-        - ctor 0.6.3 (https://github.com/mmastrac/rust-ctor)
-        - dtor-proc-macro 0.0.6 (https://github.com/mmastrac/rust-ctor)
-        - dtor 0.1.1 (https://github.com/mmastrac/rust-ctor)
+        - ctor 1.0.6 (https://github.com/mmastrac/linktime)
 -----------------------------------------------------------------------------
 
 Apache License
@@ -3422,7 +3419,7 @@ limitations under the License.
         - rustc-hash 2.1.1 (https://github.com/rust-lang/rustc-hash)
         - rustversion 1.0.22 (https://github.com/dtolnay/rustversion)
         - ryu 1.0.22 (https://github.com/dtolnay/ryu)
-        - semver 1.0.27 (https://github.com/dtolnay/semver)
+        - semver 1.0.28 (https://github.com/dtolnay/semver)
         - serde 1.0.228 (https://github.com/serde-rs/serde)
         - serde_core 1.0.228 (https://github.com/serde-rs/serde)
         - serde_derive 1.0.228 (https://github.com/serde-rs/serde)
@@ -3518,7 +3515,7 @@ limitations under the License.
 -----------------------------------------------------------------------------
                         Apache License 2.0
         applies to: 
-        - chrono 0.4.43 (https://github.com/chronotope/chrono)
+        - chrono 0.4.44 (https://github.com/chronotope/chrono)
 -----------------------------------------------------------------------------
 
 Rust-chrono is dual-licensed under The MIT License [1] and
@@ -4193,11 +4190,11 @@ SOFTWARE.
 -----------------------------------------------------------------------------
                         MIT License
         applies to: 
-        - napi-build 2.3.1 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 5.0.2 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.5.2 (https://github.com/napi-rs/napi-rs)
+        - napi-build 2.3.2 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 5.0.4 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.5.6 (https://github.com/napi-rs/napi-rs)
         - napi-sys 3.2.1 (https://github.com/napi-rs/napi-rs)
-        - napi 3.8.3 (https://github.com/napi-rs/napi-rs)
+        - napi 3.9.0 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
