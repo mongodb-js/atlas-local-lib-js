@@ -12,7 +12,7 @@ crate-type = ["cdylib"]
 [dependencies]
 anyhow = "1.0.102"
 atlas-local = { version = "0.6.1", default-features = false }
-bollard = "0.20.2"
+bollard = "0.20.1"
 napi = { version = "^3.9.0", features = ["async", "anyhow"] }
 napi-derive = "^3.5.6"
 
