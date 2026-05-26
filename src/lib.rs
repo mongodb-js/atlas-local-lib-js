@@ -2,7 +2,6 @@
 
 use anyhow::{Context, Result};
 use atlas_local::Client as AtlasLocalClient;
-use bollard::Docker;
 use napi_derive::napi;
 
 use crate::models::list_deployments::Deployment;
@@ -18,9 +17,8 @@ pub struct Client {
 impl Client {
   #[napi(factory)]
   pub fn connect() -> Result<Client> {
-    let docker = Docker::connect_with_defaults().context("connect to docker")?;
-
-    let atlas_local_client = AtlasLocalClient::new(docker);
+    let atlas_local_client =
+      AtlasLocalClient::connect_with_defaults().context("connect to docker")?;
 
     Ok(Client {
       client: atlas_local_client,
