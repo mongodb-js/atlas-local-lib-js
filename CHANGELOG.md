@@ -1,3 +1,13 @@
+## [1.3.1] - 2026-06-02
+
+### 🚀 Features
+
+- *(test)* Replace ava+nyc with vitest (CLOUDP-408325) ([#123](https://github.com/mongodb-js/atlas-local-lib-js/pull/123))
+
+### ⚙️ Miscellaneous Tasks
+
+- Add CODEOWNERS ([#105](https://github.com/mongodb-js/atlas-local-lib-js/pull/105))
+- Use apix-bot instead of github actions to update dependabot PRs ([#118](https://github.com/mongodb-js/atlas-local-lib-js/pull/118))
 ## [1.3.0] - 2026-02-18
 
 ### 🚀 Features
