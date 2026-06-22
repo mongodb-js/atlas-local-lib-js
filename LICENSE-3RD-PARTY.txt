@@ -4184,7 +4184,7 @@ SOFTWARE.
         - napi-derive-backend 5.0.4 (https://github.com/napi-rs/napi-rs)
         - napi-derive 3.5.6 (https://github.com/napi-rs/napi-rs)
         - napi-sys 3.2.2 (https://github.com/napi-rs/napi-rs)
-        - napi 3.9.2 (https://github.com/napi-rs/napi-rs)
+        - napi 3.9.3 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
