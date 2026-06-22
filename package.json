@@ -62,7 +62,7 @@
     "@oxc-node/core": "^0.1.0",
     "@taplo/cli": "^0.7.0",
     "@tybys/wasm-util": "^0.10.0",
-    "@types/node": "^25.0.2",
+    "@types/node": "^26.0.0",
     "@vitest/coverage-v8": "^4.1.8",
     "chalk": "^5.4.1",
     "husky": "^9.1.7",
