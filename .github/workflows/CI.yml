@@ -200,6 +200,9 @@ jobs:
         shell: bash
       - name: Test bindings
         run: yarn test
+      - name: Trust Coveralls tap (macOS)
+        if: runner.os == 'macOS'
+        run: brew tap coverallsapp/coveralls && brew trust coverallsapp/coveralls
       - name: Upload coverage report
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
