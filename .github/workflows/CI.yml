@@ -200,6 +200,12 @@ jobs:
         shell: bash
       - name: Test bindings
         run: yarn test
+      # Homebrew 6 requires third-party taps to be trusted; coveralls action's
+      # macOS install fails without this. Remove once coverallsapp/github-action
+      # ships the fix (coverallsapp/github-action#264).
+      - name: Trust Coveralls Homebrew tap
+        if: runner.os == 'macOS'
+        run: brew trust coverallsapp/coveralls
       - name: Upload coverage report
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
