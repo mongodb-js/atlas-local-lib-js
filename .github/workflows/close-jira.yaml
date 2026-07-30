@@ -1,7 +1,4 @@
-# sync -> mongodb/atlas-local-lib
-# sync -> mongodb/atlas-local-cli
-# sync -> mongodb-js/atlas-local-lib-js
-
+# synced from apix-actions/.github/workflows/close-jira.yaml
 name: Auto Close Jira
 
 on:
@@ -13,5 +10,8 @@ permissions: {}
 jobs:
   close-jira:
     if: contains(github.event.pull_request.labels.*.name, 'auto_close_jira')
+    permissions:
+      contents: read
+      pull-requests: read
     uses: mongodb/apix-action/.github/workflows/_close-jira.yaml@main
     secrets: inherit
