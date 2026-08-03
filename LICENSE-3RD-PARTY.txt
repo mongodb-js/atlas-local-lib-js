@@ -4180,11 +4180,11 @@ SOFTWARE.
 -----------------------------------------------------------------------------
                         MIT License
         applies to: 
-        - napi-build 2.3.2 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 6.0.0 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.6.0 (https://github.com/napi-rs/napi-rs)
+        - napi-build 2.4.0 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 6.1.1 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.6.1 (https://github.com/napi-rs/napi-rs)
         - napi-sys 3.3.0 (https://github.com/napi-rs/napi-rs)
-        - napi 3.11.0 (https://github.com/napi-rs/napi-rs)
+        - napi 3.12.0 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
