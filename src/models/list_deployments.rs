@@ -243,6 +243,8 @@ mod tests {
         binding_type: atlas_local::models::BindingType::Loopback,
         port: Some(27017),
       }),
+      image: None,
+      image_tag: None,
       mongodb_type: atlas_local::models::MongodbType::Community,
       mongodb_version: Version::new(8, 0, 0),
       creation_source: Some(atlas_local::models::CreationSource::AtlasCLI),
