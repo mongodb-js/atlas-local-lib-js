@@ -61,7 +61,7 @@ jobs:
         with:
           components: llvm-tools-preview
       - name: Install cargo-llvm-cov
-        uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@v2.85.5
         with:
           tool: cargo-llvm-cov
       - name: Cache cargo registry
@@ -136,7 +136,7 @@ jobs:
         with:
           version: 0.14.1
       - name: Install cargo-zigbuild
-        uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@v2.85.5
         if: ${{ contains(matrix.settings.target, 'musl') }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
