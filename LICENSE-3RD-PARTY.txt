@@ -4,7 +4,7 @@ THIRD PARTY LICENSES
 This file lists the licenses of the projects used in atlas-local-js.
 
 OVERVIEW OF LICENSES:
-- Apache License 2.0 (97 dependencies)
+- Apache License 2.0 (98 dependencies)
 - MIT License (24 dependencies)
 - Unicode License v3 (19 dependencies)
 - ISC License (1 dependencies)
@@ -3418,6 +3418,7 @@ limitations under the License.
         - serde_urlencoded 0.7.1 (https://github.com/nox/serde_urlencoded)
         - shlex 1.3.0 (https://github.com/comex/rust-shlex)
         - syn 2.0.114 (https://github.com/dtolnay/syn)
+        - syn 3.0.9 (https://github.com/dtolnay/syn)
         - thiserror-impl 2.0.18 (https://github.com/dtolnay/thiserror)
         - thiserror 2.0.18 (https://github.com/dtolnay/thiserror)
         - unicode-ident 1.0.22 (https://github.com/dtolnay/unicode-ident)
@@ -4181,10 +4182,10 @@ SOFTWARE.
                         MIT License
         applies to: 
         - napi-build 2.6.0 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 6.1.4 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.6.10 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 6.1.5 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.6.12 (https://github.com/napi-rs/napi-rs)
         - napi-sys 3.4.0 (https://github.com/napi-rs/napi-rs)
-        - napi 3.14.0 (https://github.com/napi-rs/napi-rs)
+        - napi 3.14.2 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
