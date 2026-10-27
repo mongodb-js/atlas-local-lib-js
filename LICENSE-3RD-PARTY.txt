@@ -4211,7 +4211,7 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
                         MIT License
         applies to: 
         - tokio-util 0.7.18 (https://github.com/tokio-rs/tokio)
-        - tokio 1.52.3 (https://github.com/tokio-rs/tokio)
+        - tokio 1.53.3 (https://github.com/tokio-rs/tokio)
 -----------------------------------------------------------------------------
 
 MIT License
