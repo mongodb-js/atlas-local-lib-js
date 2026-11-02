@@ -41,6 +41,21 @@ const deployments = await client.listDeployments();
 console.log(deployments);
 ```
 
+For auto-embedding with a non-default Voyage gateway, provide the full HTTPS
+embeddings URL and a non-empty Voyage API key:
+
+```typescript
+const deployment = await client.createDeployment({
+  name: 'my-local-deployment',
+  voyageApiKey: '<key>',
+  embeddingProviderEndpoint: 'https://api.voyageai.com/v1/embeddings',
+});
+```
+
+Use `https://ai.mongodb.com/v1/embeddings` for Atlas-issued production keys,
+`https://api.voyageai.com/v1/embeddings` for keys created directly with Voyage
+AI, or the corresponding Atlas staging gateway for a staging key.
+
 ## Development
 
 ### Build

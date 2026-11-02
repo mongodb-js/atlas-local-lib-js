@@ -19,6 +19,18 @@ test('smoke test', async () => {
     throw new Error('Client not created')
   }
 
+  await expect(
+    client.createDeployment({
+      embeddingProviderEndpoint: 'https://api.voyageai.com/v1/embeddings',
+    }),
+  ).rejects.toThrow('voyageApiKey is required')
+  await expect(
+    client.createDeployment({
+      voyageApiKey: 'test-voyage-api-key',
+      embeddingProviderEndpoint: 'http://api.voyageai.com/v1/embeddings',
+    }),
+  ).rejects.toThrow('absolute HTTPS URL')
+
   // Skip test after client creation on Windows
   // Note all Windows return win32 including 64 bit
   if (process.platform === 'win32') {
@@ -32,9 +44,14 @@ test('smoke test', async () => {
   let createDeploymentOptions = {
     name: 'test_deployment',
     doNotTrack: true,
+    voyageApiKey: 'test-voyage-api-key',
+    embeddingProviderEndpoint: 'https://api.voyageai.com/v1/embeddings',
   }
   let deployment = await client.createDeployment(createDeploymentOptions)
   expect(deployment.name).toBe(createDeploymentOptions.name)
+  expect(deployment.embeddingProviderEndpoint).toBe(
+    createDeploymentOptions.embeddingProviderEndpoint,
+  )
 
   // Get the deployment id twice, make sure it's the same
   let deploymentId = await client.getDeploymentId(createDeploymentOptions.name)
