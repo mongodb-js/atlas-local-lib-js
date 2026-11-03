@@ -1,9 +1,10 @@
 use crate::models::list_deployments::{CreationSource, MongoDBPortBinding};
-use atlas_local::models::ImageTag;
+use atlas_local::models::{EmbeddingProviderEndpoint, ImageTag};
 use napi_derive::napi;
 use std::time::Duration;
 
 #[napi(object)]
+#[derive(Default)]
 pub struct CreateDeploymentOptions {
   // Identifiers
   pub name: Option<String>,
@@ -27,6 +28,7 @@ pub struct CreateDeploymentOptions {
   pub mongodb_initdb_root_username_file: Option<String>,
   pub mongodb_initdb_root_username: Option<String>,
   pub voyage_api_key: Option<String>,
+  pub embedding_provider_endpoint: Option<String>,
 
   // Logging
   pub mongot_log_file: Option<String>,
@@ -44,6 +46,21 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
   type Error = anyhow::Error;
 
   fn try_from(source: CreateDeploymentOptions) -> Result<Self, Self::Error> {
+    if source.embedding_provider_endpoint.is_some()
+      && source
+        .voyage_api_key
+        .as_deref()
+        .is_none_or(|api_key| api_key.trim().is_empty())
+    {
+      anyhow::bail!("voyageApiKey is required when embeddingProviderEndpoint is set");
+    }
+
+    let embedding_provider_endpoint = source
+      .embedding_provider_endpoint
+      .map(EmbeddingProviderEndpoint::try_from)
+      .transpose()
+      .map_err(anyhow::Error::msg)?;
+
     Ok(Self {
       name: source.name,
       image: source.image,
@@ -69,6 +86,7 @@ impl TryFrom<CreateDeploymentOptions> for atlas_local::models::CreateDeploymentO
       mongodb_initdb_root_username_file: source.mongodb_initdb_root_username_file,
       mongodb_initdb_root_username: source.mongodb_initdb_root_username,
       voyage_api_key: source.voyage_api_key,
+      embedding_provider_endpoint,
       mongot_log_file: source.mongot_log_file,
       runner_log_file: source.runner_log_file,
       do_not_track: source.do_not_track,
@@ -109,6 +127,7 @@ mod tests {
       mongodb_initdb_root_username_file: Some("/run/secrets/username".to_string()),
       mongodb_initdb_root_username: Some("admin".to_string()),
       voyage_api_key: Some("voyage_api_key".to_string()),
+      embedding_provider_endpoint: Some("https://api.voyageai.com/v1/embeddings".to_string()),
       mongot_log_file: Some("/tmp/mongot.log".to_string()),
       runner_log_file: Some("/tmp/runner.log".to_string()),
       do_not_track: Some(false),
@@ -178,6 +197,13 @@ mod tests {
       Some("voyage_api_key".to_string())
     );
     assert_eq!(
+      lib_create_deployment_options
+        .embedding_provider_endpoint
+        .as_ref()
+        .map(ToString::to_string),
+      Some("https://api.voyageai.com/v1/embeddings".to_string())
+    );
+    assert_eq!(
       lib_create_deployment_options.mongot_log_file,
       Some("/tmp/mongot.log".to_string())
     );
@@ -189,6 +215,35 @@ mod tests {
     assert_eq!(
       lib_create_deployment_options.telemetry_base_url,
       Some("https://telemetry.example.com".to_string())
+    );
+  }
+
+  #[test]
+  fn test_embedding_provider_endpoint_requires_voyage_api_key() {
+    let options = CreateDeploymentOptions {
+      embedding_provider_endpoint: Some("https://api.voyageai.com/v1/embeddings".to_string()),
+      ..Default::default()
+    };
+    let result: anyhow::Result<atlas_local::models::CreateDeploymentOptions> = options.try_into();
+
+    assert_eq!(
+      result.unwrap_err().to_string(),
+      "voyageApiKey is required when embeddingProviderEndpoint is set"
+    );
+  }
+
+  #[test]
+  fn test_embedding_provider_endpoint_requires_https() {
+    let options = CreateDeploymentOptions {
+      voyage_api_key: Some("voyage_api_key".to_string()),
+      embedding_provider_endpoint: Some("http://api.voyageai.com/v1/embeddings".to_string()),
+      ..Default::default()
+    };
+    let result: anyhow::Result<atlas_local::models::CreateDeploymentOptions> = options.try_into();
+
+    assert_eq!(
+      result.unwrap_err().to_string(),
+      "embedding_provider_endpoint must be an absolute HTTPS URL"
     );
   }
 }

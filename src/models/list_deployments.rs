@@ -28,6 +28,7 @@ pub struct Deployment {
   pub mongodb_initdb_root_username: Option<String>,
   pub mongodb_load_sample_data: Option<bool>,
   pub voyage_api_key: Option<String>,
+  pub embedding_provider_endpoint: Option<String>,
 
   // Logging
   pub mongot_log_file: Option<String>,
@@ -110,6 +111,9 @@ impl From<atlas_local::models::Deployment> for Deployment {
       mongodb_initdb_root_username: source.mongodb_initdb_root_username,
       mongodb_load_sample_data: source.mongodb_load_sample_data,
       voyage_api_key: source.voyage_api_key,
+      embedding_provider_endpoint: source
+        .embedding_provider_endpoint
+        .map(|endpoint| endpoint.to_string()),
       mongot_log_file: source.mongot_log_file,
       runner_log_file: source.runner_log_file,
       do_not_track: source.do_not_track,
@@ -256,6 +260,12 @@ mod tests {
       mongodb_initdb_root_username: Some("admin".to_string()),
       mongodb_load_sample_data: Some(false),
       voyage_api_key: Some("voyage_api_key".to_string()),
+      embedding_provider_endpoint: Some(
+        atlas_local::models::EmbeddingProviderEndpoint::try_from(
+          "https://api.voyageai.com/v1/embeddings",
+        )
+        .unwrap(),
+      ),
       mongot_log_file: Some("/tmp/mongot.log".to_string()),
       runner_log_file: Some("/tmp/runner.log".to_string()),
       do_not_track: false,
@@ -309,6 +319,10 @@ mod tests {
     assert_eq!(
       deployment.voyage_api_key,
       Some("voyage_api_key".to_string())
+    );
+    assert_eq!(
+      deployment.embedding_provider_endpoint,
+      Some("https://api.voyageai.com/v1/embeddings".to_string())
     );
     assert_eq!(
       deployment.mongot_log_file,

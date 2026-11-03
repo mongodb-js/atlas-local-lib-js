@@ -30,6 +30,7 @@ export interface CreateDeploymentOptions {
   mongodbInitdbRootUsernameFile?: string
   mongodbInitdbRootUsername?: string
   voyageApiKey?: string
+  embeddingProviderEndpoint?: string
   mongotLogFile?: string
   runnerLogFile?: string
   doNotTrack?: boolean
@@ -64,6 +65,7 @@ export interface Deployment {
   mongodbInitdbRootUsername?: string
   mongodbLoadSampleData?: boolean
   voyageApiKey?: string
+  embeddingProviderEndpoint?: string
   mongotLogFile?: string
   runnerLogFile?: string
   doNotTrack: boolean
