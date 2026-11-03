@@ -4182,10 +4182,10 @@ SOFTWARE.
                         MIT License
         applies to: 
         - napi-build 2.6.0 (https://github.com/napi-rs/napi-rs)
-        - napi-derive-backend 6.1.5 (https://github.com/napi-rs/napi-rs)
-        - napi-derive 3.6.12 (https://github.com/napi-rs/napi-rs)
-        - napi-sys 3.4.0 (https://github.com/napi-rs/napi-rs)
-        - napi 3.14.2 (https://github.com/napi-rs/napi-rs)
+        - napi-derive-backend 7.0.0 (https://github.com/napi-rs/napi-rs)
+        - napi-derive 3.7.0 (https://github.com/napi-rs/napi-rs)
+        - napi-sys 3.4.1 (https://github.com/napi-rs/napi-rs)
+        - napi 3.16.1 (https://github.com/napi-rs/napi-rs)
 -----------------------------------------------------------------------------
 
 MIT License
