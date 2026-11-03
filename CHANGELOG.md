@@ -1,3 +1,23 @@
+## [1.3.2] - 2026-11-03
+
+### 🚀 Features
+
+- Support embedding provider endpoint ([#240](https://github.com/mongodb-js/atlas-local-lib-js/pull/240))
+
+### ⚙️ Miscellaneous Tasks
+
+- Add Jira automation workflows ([#135](https://github.com/mongodb-js/atlas-local-lib-js/pull/135))
+- Apix-action updates ([#154](https://github.com/mongodb-js/atlas-local-lib-js/pull/154))
+- Apix-action updates ([#160](https://github.com/mongodb-js/atlas-local-lib-js/pull/160))
+- Apix-action updates ([#177](https://github.com/mongodb-js/atlas-local-lib-js/pull/177))
+- Apix-action updates ([#185](https://github.com/mongodb-js/atlas-local-lib-js/pull/185))
+- Apix-action updates ([#210](https://github.com/mongodb-js/atlas-local-lib-js/pull/210))
+- Move third-party license generation into Dependabot post-update hook ([#211](https://github.com/mongodb-js/atlas-local-lib-js/pull/211))
+- Apix-action updates ([#212](https://github.com/mongodb-js/atlas-local-lib-js/pull/212))
+- Apix-action updates ([#213](https://github.com/mongodb-js/atlas-local-lib-js/pull/213))
+- Apix-action updates ([#221](https://github.com/mongodb-js/atlas-local-lib-js/pull/221))
+- Apix-action updates ([#222](https://github.com/mongodb-js/atlas-local-lib-js/pull/222))
+- Apix-action updates ([#223](https://github.com/mongodb-js/atlas-local-lib-js/pull/223))
 ## [1.3.1] - 2026-06-02
 
 ### 🚀 Features
