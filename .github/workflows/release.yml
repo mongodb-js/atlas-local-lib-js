@@ -18,6 +18,8 @@ env:
   DEBUG: napi:*
   APP_NAME: atlas-local
   MACOSX_DEPLOYMENT_TARGET: '10.13'
+  # Keep in sync with CARGO_ABOUT_VERSION in CI.yml
+  CARGO_ABOUT_VERSION: 0.8.4
 
 jobs:
   update-version:
@@ -50,7 +52,7 @@ jobs:
         run: yarn install
       - name: Install cargo tools for license verification
         run: |
-          cargo install --locked --version 0.8.2 cargo-about
+          cargo install --locked --version ${{ env.CARGO_ABOUT_VERSION }} cargo-about
       - name: Update package.json version
         run: |
           npm version ${{ github.event.inputs.version }} --no-git-tag-version
@@ -59,7 +61,7 @@ jobs:
           sed -i 's/^version = ".*"/version = "${{ github.event.inputs.version }}"/' Cargo.toml
       - name: Update third-party licenses
         run: |
-          cargo about generate about.hbs > LICENSE-3RD-PARTY.txt
+          cargo about generate --frozen about.hbs > LICENSE-3RD-PARTY.txt
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
         with:

@@ -12,4 +12,4 @@ if ! command -v cargo-about >/dev/null 2>&1; then
   cargo install --locked --version "${CARGO_ABOUT_VERSION}" cargo-about
 fi
 
-cargo about generate about.hbs > LICENSE-3RD-PARTY.txt
+cargo about generate --frozen about.hbs > LICENSE-3RD-PARTY.txt
