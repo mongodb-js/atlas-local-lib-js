@@ -12,4 +12,6 @@ if ! command -v cargo-about >/dev/null 2>&1; then
   cargo install --locked --version "${CARGO_ABOUT_VERSION}" cargo-about
 fi
 
-cargo about generate about.hbs > LICENSE-3RD-PARTY.txt
+# Keep Cargo.lock stable without forcing offline metadata resolution; fresh
+# Dependabot runners may not have every registry index entry cached.
+cargo about generate --locked about.hbs > LICENSE-3RD-PARTY.txt
