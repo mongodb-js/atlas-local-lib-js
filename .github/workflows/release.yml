@@ -1,105 +1,23 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release (e.g., 1.0.0)'
-        required: true
-        type: string
+  push:
+    tags:
+      - 'v[0-9]*'
 
-run-name: "Release: ${{ inputs.version }}"
+run-name: "Release: ${{ github.ref_name }}"
 
 permissions:
   contents: read
-  id-token: write # Required for npm trusted publishing
 
 env:
   DEBUG: napi:*
   APP_NAME: atlas-local
   MACOSX_DEPLOYMENT_TARGET: '10.13'
-  # Keep in sync with CARGO_ABOUT_VERSION in CI.yml
-  CARGO_ABOUT_VERSION: 0.8.4
 
 jobs:
-  update-version:
-    name: Update Version
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    steps:
-      - name: Set Apix Bot token
-        id: app-token
-        uses: mongodb/apix-action/token@ca63bdc0f33a15da45755eb6a54c072ba65d3923
-        with:
-          app-id: ${{ secrets.APIXBOT_APP_ID }}
-          private-key: ${{ secrets.APIXBOT_APP_PEM }}
-      - uses: actions/checkout@v7
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-          fetch-depth: 0
-      - name: Setup node
-        uses: actions/setup-node@v7
-        with:
-          node-version: 22
-          cache: yarn
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: stable
-          targets: x86_64-unknown-linux-gnu
-      - name: Install dependencies
-        run: yarn install
-      - name: Install cargo tools for license verification
-        run: |
-          cargo install --locked --version ${{ env.CARGO_ABOUT_VERSION }} cargo-about
-      - name: Update package.json version
-        run: |
-          npm version ${{ github.event.inputs.version }} --no-git-tag-version
-      - name: Update Cargo.toml version
-        run: |
-          sed -i 's/^version = ".*"/version = "${{ github.event.inputs.version }}"/' Cargo.toml
-      - name: Update third-party licenses
-        run: |
-          cargo about generate --frozen about.hbs > LICENSE-3RD-PARTY.txt
-      - name: Generate changelog
-        uses: orhun/git-cliff-action@v4
-        with:
-          config: cliff.toml
-          args: --tag ${{ github.event.inputs.version }} --verbose
-        env:
-          OUTPUT: CHANGELOG.md
-          GITHUB_REPO: ${{ github.repository }}
-      - name: Generate release notes
-        uses: orhun/git-cliff-action@v4
-        with:
-          config: cliff.toml
-          args: --tag ${{ github.event.inputs.version }} --verbose --unreleased
-        env:
-          OUTPUT: RELEASE_NOTES.md
-          GITHUB_REPO: ${{ github.repository }}
-      - name: Upload release notes artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: release-notes
-          path: RELEASE_NOTES.md
-          if-no-files-found: error
-      - name: Build to update generated files
-        run: yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
-      - name: Commit version changes
-        run: |
-          git config --global user.name "${{ steps.app-token.outputs.user-name }}"
-          git config --global user.email "${{ steps.app-token.outputs.user-email }}"
-          git add package.json Cargo.toml Cargo.lock index.js index.d.ts CHANGELOG.md LICENSE-3RD-PARTY.txt
-          git commit -m "${{ github.event.inputs.version }}"
-          git push
-      - name: Set version output
-        id: version
-        run: echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
-
   build:
     name: Build Release
-    needs: update-version
     strategy:
       fail-fast: false
       matrix:
@@ -123,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: main
+          ref: ${{ github.ref }}
       - name: Setup node
         uses: actions/setup-node@v7
         with:
@@ -156,10 +74,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           tool: cargo-zigbuild
-      - name: Setup toolchain
-        run: ${{ matrix.settings.setup }}
-        if: ${{ matrix.settings.setup }}
-        shell: bash
       - name: Install dependencies
         run: yarn install
       - name: Build
@@ -180,11 +94,12 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    needs: [update-version, build]
+    needs: [build]
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: main
+          ref: ${{ github.ref }}
+          fetch-depth: 0
       - name: Setup node
         uses: actions/setup-node@v7
         with:
@@ -194,6 +109,14 @@ jobs:
       # Required for trusted publishing: https://docs.npmjs.com/trusted-publishers
       - name: Update npm
         run: npm install -g npm@latest
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --tag ${{ github.ref_name }} --verbose --latest
+        env:
+          OUTPUT: RELEASE_NOTES.md
+          GITHUB_REPO: ${{ github.repository }}
       - name: Install dependencies
         run: yarn install
       - name: Create npm dirs
@@ -210,9 +133,9 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: v${{ needs.update-version.outputs.version }}
-          name: Release v${{ needs.update-version.outputs.version }}
-          body_path: artifacts/release-notes/RELEASE_NOTES.md
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body_path: RELEASE_NOTES.md
           files: |
             artifacts/bindings-*/*.node
             index.js
@@ -225,18 +148,15 @@ jobs:
       - name: Publish to NPM
         run: |
           npm config set provenance true
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          if echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" > /dev/null;
-          then
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Publishing stable release to latest tag"
             npm publish --access public
-          elif echo "$COMMIT_MSG" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+" > /dev/null;
-          then
+          elif [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+- ]]; then
             echo "Publishing pre-release to next tag"
             npm publish --tag next --access public
           else
-            echo "Invalid release tag format: '$COMMIT_MSG'"
+            echo "Invalid release tag format: '$GITHUB_REF_NAME'"
             echo "Expected format: X.Y.Z or X.Y.Z-suffix"
-            echo "Skipping publish"
-            exit 0
+            exit 1
           fi

@@ -58,6 +58,10 @@ AI, or the corresponding Atlas staging gateway for a staging key.
 
 ## Development
 
+### Releasing
+
+See [RELEASING.md](RELEASING.md) for the release process.
+
 ### Build
 
 ```bash
